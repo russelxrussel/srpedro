@@ -396,4 +396,59 @@ namespace SRPEDRO
             
         }
     }
+
+    public class Supplier : cBase
+    {
+
+
+        public void INSERT_SUPPLIER_ORDER_TRANS_HDR(string _supplierCode, DateTime _documentDate, DateTime _deliveryDate, string _ssnum, string _remarks, string _userCode)
+        {
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("Trans.SP_INSERT_SUPPLIER_TRANS", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+            
+                    cmd.Parameters.AddWithValue("@SUPPLIERCODE", _supplierCode);
+                    cmd.Parameters.AddWithValue("@DOCUMENTDATE", _documentDate);
+                    cmd.Parameters.AddWithValue("@DELIVERYDATE", _deliveryDate);
+                    cmd.Parameters.AddWithValue("@SSNUM", _ssnum);
+                    cmd.Parameters.AddWithValue("@REMARKS", _remarks);
+                    cmd.Parameters.AddWithValue("@USERCODE", _userCode);
+
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+
+        public void INSERT_SUPPLIER_ORDER_TRANS_ROWS(string _supplierCode, string _ssnum, string _itemCode, double _itemQty, double _itemPrice, string _uom, string _userCode)
+        {
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("Trans.SP_INSERT_SUPPLIER_TRANS_ROWS", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@SUPPLIERCODE", _supplierCode);
+                    cmd.Parameters.AddWithValue("@SSNUM", _ssnum);
+                    cmd.Parameters.AddWithValue("@ITEMCODE", _itemCode);
+                    cmd.Parameters.AddWithValue("@ITEMQTY", _itemQty);
+                    cmd.Parameters.AddWithValue("@ITEMPRICE", _itemPrice);
+                    cmd.Parameters.AddWithValue("@UOM", _uom);
+                    cmd.Parameters.AddWithValue("@USERCODE", _userCode);
+
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+  
+    }
 }

@@ -12,7 +12,8 @@ public partial class Transaction : System.Web.UI.Page
     
     xtra oXtra = new xtra();
     seriesNumber oSeriesNumber = new seriesNumber();
-    
+    Supplier oSupplier = new Supplier();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -45,40 +46,64 @@ public partial class Transaction : System.Web.UI.Page
         
     }
 
-      protected void U_Save_S_Click(object sender, EventArgs e)
+    protected void U_Save_S_Click(object sender, EventArgs e)
     {
-       
+
         if (gvSupplierItems.Rows.Count > 0)
         {
-            DateTime dtDateTrans = Convert.ToDateTime(txtDateTrans.Text);
+            //Saving Data on Supplier Transaction HDR
+
+            oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateTrans.Text), oSeriesNumber.generateSeriesNumber("STR"), "Testing Remarks", "RUssel");
+
+
+            //Saving Rows Transaction of Supplier
 
             foreach (GridViewRow row in gvSupplierItems.Rows)
             {
-                string sCustomer = row.Cells[0].Text;
-                string sTransTypeCode = row.Cells[1].Text;
-                string sItemCode = row.Cells[2].Text;
-                double dPrice = double.Parse(row.Cells[5].Text);
-                double dQty = double.Parse(row.Cells[4].Text);
-               
+                string sItemCode = row.Cells[1].Text;
+                double dQty = double.Parse(row.Cells[3].Text);
+                double dPrice = double.Parse(row.Cells[4].Text);
 
-                oXtra.INSERT_INVENTORY_TRANS(sCustomer, sTransTypeCode, sItemCode, "", dQty, dPrice, dtDateTrans, "USER-TEST");
-                oXtra.UPDATE_INVENTORY_DATA(sItemCode, dQty, dtDateTrans, sTransTypeCode);
-
-                clearFields();
-                //Clear Temporary table
-
-                gvSupplierItems.DataSource = null;
-                gvSupplierItems.DataBind();
-
-                createTempBranch();
-
-               
-                txtDateTrans.Enabled = true;
-             
-
+                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), oSeriesNumber.generateSeriesNumber("STR"), sItemCode, dQty, dPrice, "PCS", "Russe");
             }
-        }
 
+
+            //Prompt a message.
+
+            lblMessageSuccess.Text = "Transaction successfully recorded.";
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgSuccessModal').modal('show');</script>", false);
+   
+
+            //    DateTime dtDateTrans = Convert.ToDateTime(txtDateTrans.Text);
+
+            //    foreach (GridViewRow row in gvSupplierItems.Rows)
+            //    {
+            //        string sCustomer = row.Cells[0].Text;
+            //        string sTransTypeCode = row.Cells[1].Text;
+            //        string sItemCode = row.Cells[2].Text;
+            //        double dPrice = double.Parse(row.Cells[5].Text);
+            //        double dQty = double.Parse(row.Cells[4].Text);
+
+
+            //        oXtra.INSERT_INVENTORY_TRANS(sCustomer, sTransTypeCode, sItemCode, "", dQty, dPrice, dtDateTrans, "USER-TEST");
+            //        oXtra.UPDATE_INVENTORY_DATA(sItemCode, dQty, dtDateTrans, sTransTypeCode);
+
+            //        clearFields();
+            //        //Clear Temporary table
+
+            //        gvSupplierItems.DataSource = null;
+            //        gvSupplierItems.DataBind();
+
+            //        createTempBranch();
+
+
+            //        txtDateTrans.Enabled = true;
+
+
+            //    }
+            //}
+
+        }
     }
 
       protected void ddTransType_SelectedIndexChanged(object sender, EventArgs e)
@@ -119,7 +144,6 @@ public partial class Transaction : System.Web.UI.Page
               //Add New Row
               DataRow newRow = dt.NewRow();
               
-              //newRow["SUPPLIERCODE"] = ddSupplierList.SelectedValue.ToString();
               newRow["ITEMCODE"] = ddItemList.SelectedValue.ToString();
               newRow["DESCRIPTION"] = ddItemList.SelectedItem.Text + "***" + oSeriesNumber.generateSeriesNumber("STR");
               newRow["QTY"] = double.Parse(txtQuantity.Text);
