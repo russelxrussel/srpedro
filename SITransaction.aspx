@@ -15,73 +15,75 @@
   </style>
    
 
-   <script type="text/javascript">
-       $(document).ready(function () {
-
-           var prm = Sys.WebForms.PageRequestManager.getInstance();
-           prm.add_initializeRequest(InitialRequest);
-           prm.add_endRequest(EndRequest);
-
-           //Auto Complete Initial
-           setAutoComplete();
-           setCalendarInput();
-
-
-       });
-
-       function InitialRequest(sender, args) {
-       }
-
-       function EndRequest(sender, args) {
-           setAutoComplete();
-           setCalendarInput();
-       }
-
-       //    "WebService.asmx/GET_Supplier_List",
-       function setAutoComplete() {
-           $("<%= txtSearchSupplier.ClientID %>").autocomplete({
-               source: function (request, response) {
-                   $.ajax({
-                       url: "WebService.asmx/GET_Supplier_List",
-                       method: "POST",
-                       contentType: "application/json;charset=utf-8",
-                       data: JSON.stringify({ _supplierName: $("#<%= txtSearchSupplier.ClientID %>").val() }),
-                       dataType: "json",
-                       success: function (data) {
-                           response($.map(data.d, function (item) {
-                               return {
-                                   label: item.split('*')[1],
-                                   val: item.split('*')[0]
-                               }
-                           }))
-
-                       },
-
-                       error: function (err) {
-                           alert('Error: ' + err);
-                           //console.log('Error:', data);
-                       }
-                   })
-               },
-               select: function (e, i) {
-                   $("[id*=hfSupplierCode]").val(i.item.val);
-               },
-               minLength: 2,
-               appendTo: '#divSearch'
-           });
-       }
-
-
-
-       // For Calendar Inputs
-       function setCalendarInput() {
-           $('.calendarInput').datepicker();
-       }
-</script>
+   
 </asp:Content>
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        prm.add_initializeRequest(InitialRequest);
+        prm.add_endRequest(EndRequest);
+
+        //Auto Complete Initial
+        setAutoComplete();
+        setCalendarInput();
+
+
+    });
+
+    function InitialRequest(sender, args) {
+    }
+
+    function EndRequest(sender, args) {
+        setAutoComplete();
+        setCalendarInput();
+    }
+
+    //    "WebService.asmx/GET_Supplier_List",
+    function setAutoComplete() {
+        $("<%= txtSearchSupplier.ClientID %>").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "WebService.asmx/GET_Supplier_List",
+                    method: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({ _supplierName: $("#<%= txtSearchSupplier.ClientID %>").val() }),
+                    dataType: "json",
+                    success: function (data) {
+                        response($.map(data.d, function (item) {
+                            return {
+                                label: item.split('*')[1],
+                                val: item.split('*')[0]
+                            }
+                        }))
+
+                    },
+
+                    error: function (err) {
+                        alert('Error: ' + err);
+                        //console.log('Error:', data);
+                    }
+                })
+            },
+            select: function (e, i) {
+                $("[id*=hfSupplierCode]").val(i.item.val);
+            },
+            minLength: 2,
+            appendTo: '#divSearch'
+        });
+    }
+
+
+
+    // For Calendar Inputs
+    function setCalendarInput() {
+        $('.calendarInput').datepicker();
+    }
+</script>
+
 
     <div class="container container_content">
         <div class="panel panel-default">
