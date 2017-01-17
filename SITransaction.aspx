@@ -35,6 +35,7 @@
     });
 
     function InitialRequest(sender, args) {
+     
     }
 
     function EndRequest(sender, args) {
@@ -44,10 +45,10 @@
 
     //    "WebService.asmx/GET_Supplier_List",
     function setAutoComplete() {
-        $("<%= txtSearchSupplier.ClientID %>").autocomplete({
+        $("#<%= txtSearchSupplier.ClientID %>").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "WebService.asmx/GET_Supplier_List",
+                    url: "WebService.asmx/GETSupplierList",
                     method: "POST",
                     contentType: "application/json;charset=utf-8",
                     data: JSON.stringify({ _supplierName: $("#<%= txtSearchSupplier.ClientID %>").val() }),
@@ -63,8 +64,8 @@
                     },
 
                     error: function (err) {
-                        alert('Error: ' + err);
-                        //console.log('Error:', data);
+                       alert('Error' + err);
+                       // console.log('Error:', data);
                     }
                 })
             },
@@ -82,6 +83,8 @@
     function setCalendarInput() {
         $('.calendarInput').datepicker();
     }
+
+
 </script>
 
 
@@ -116,7 +119,7 @@
                                     </span>
                                     <asp:TextBox runat="server" ID="txtDateTrans" CssClass="calendarInput form-control"
                                         placeholder="Document Date"></asp:TextBox>
-                                    </script>
+                                  
                                 </div>
                             </div>
                             <!-- Transaction Type-->
@@ -165,7 +168,19 @@
                                             </div>
                                    </div>
                                    <br />
+                                   <asp:Panel runat="server" ID="panelUOM">
                                    <div class="row">       
+                                            <div class="col-mid-6">
+                                            UOM: <asp:Label runat="server" id="lblUOM" CssClass="form-control"></asp:Label>
+                                            </div>
+                                             <div class="col-mid-6">
+                                            PRICE: <asp:Label runat="server" id="lblPrice" CssClass="form-control"></asp:Label>
+                                            </div>
+                                   </div>
+                                   </asp:Panel>
+                                <br />
+                                <div class="row">   
+                                
                                             <div class="col-md-6">
                                                 <div class="input-group input-group-sm">
                                                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span>
@@ -191,7 +206,7 @@
 
                    <div class="col-md-8">
                    <!--Display Items added -->
-                   <div class="panel panel-info">
+                   <div class="panel panel-default">
                    <div class="panel-heading">
                    <div class="panel-title">List of Order Items</div>
                    </div>
@@ -264,11 +279,7 @@
                            </ContentTemplate>
                                     </asp:UpdatePanel>
            
-            <asp:Panel runat="server" ID="panelPrice">
-                <div class="col-md-2">
-                    <asp:Label runat="server" ID="lblPrice" Visible="true"></asp:Label>
-                </div>
-            </asp:Panel>
+           
         </div>
         <!--End of Content body-->
             <%-- <asp:RequiredFieldValidator ID="rfvQuantity" runat="server" ErrorMessage="* Quantity Required!" ControlToValidate="txtQuantity"></asp:RequiredFieldValidator>--%>

@@ -9,26 +9,29 @@ using System.Web.Services;
 using System.Web.Script.Serialization;
 using SRPEDRO;
 
-
 /// <summary>
-/// Summary description for WService
+/// Summary description for WServices
 /// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 [System.Web.Script.Services.ScriptService]
+public class WServices : System.Web.Services.WebService {
 
-public class WService : System.Web.Services.WebService {
-
-    public WService()
-    {
+    public WServices () {
 
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
-    
+
     [WebMethod]
-    public string[] GET_Supplier_List(string _supplierName)
+    public string HelloWorld() {
+        return "Hello World";
+    }
+
+
+    [WebMethod]
+    public string[] GETSupplierList(string _supplierName)
     {
 
         List<string> listSuppliers = new List<string>();
@@ -54,8 +57,5 @@ public class WService : System.Web.Services.WebService {
 
         return listSuppliers.ToArray();
     }
-
-   
-  
     
 }
