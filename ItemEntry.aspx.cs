@@ -8,7 +8,7 @@ using SRPEDRO;
 
 public partial class ItemEntry : System.Web.UI.Page
 {
-    xtra oXtra = new xtra();
+    Main_C oXtra = new Main_C();
 
     protected void Page_Load(object sender, EventArgs e)
     {

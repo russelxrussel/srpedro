@@ -12,7 +12,7 @@ public partial class login : System.Web.UI.Page
     //decrpytClass decrypt = new decrpytClass();
     //xSystem oLogin = new xSystem();
 
-    xtra oXtra = new xtra();
+    Main_C oXtra = new Main_C();
 
     protected void Page_Load(object sender, EventArgs e)
     {

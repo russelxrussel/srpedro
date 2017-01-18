@@ -10,110 +10,98 @@ using SRPEDRO;
 public partial class Transaction : System.Web.UI.Page
 {
     
-    xtra oXtra = new xtra();
-    seriesNumber oSeriesNumber = new seriesNumber();
-    Supplier oSupplier = new Supplier();
+    Main_C oMain = new Main_C();
+    SeriesNumber_C oSeriesNumber = new SeriesNumber_C();
+    Supplier_C oSupplier = new Supplier_C();
+    Item_C oItem = new Item_C();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-           
-
-            displayTransTypeList();
-
             displaySupplierList();
-            displayBranchList();
+   
             displayItemList();
 
 
 
-            //For Branch
-            createTempBranch();
+            //Create Temporary Table for Ordered item from Supplier
+            createTempItemSupplier();
+
+
 
         }
 
     }
 
-    protected void ddBranchList_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
-    }
    
 
     protected void ddItemList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        
+         DataTable dtItemList = oItem.GET_ITEM_LIST();
+
+        DataRow[] dr;
+        dr = dtItemList.Select("ItemCode = '" + ddItemList.SelectedValue.ToString() + "'");
+
+        if (dr.Length > 0)
+        {
+            //Will display the selected item info
+            foreach (DataRow row in dr)
+            {
+                lblUOM.Text = row["UomCode"].ToString();
+                lblPrice.Text = row["ItemPrice"].ToString();
+            }
+        }
     }
 
     protected void U_Save_S_Click(object sender, EventArgs e)
     {
 
+        //Saving Data on Supplier Transaction HDR
+
+        oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDeliveryDate.Text), oSeriesNumber.GENERATE_SERIES_NUMBER("ST"), txtRemarks.Text, "RUssel");
+
+
         if (gvSupplierItems.Rows.Count > 0)
         {
-            //Saving Data on Supplier Transaction HDR
-
-            oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateTrans.Text), oSeriesNumber.generateSeriesNumber("STR"), "Testing Remarks", "RUssel");
-
-
+        
             //Saving Rows Transaction of Supplier
-
             foreach (GridViewRow row in gvSupplierItems.Rows)
             {
+                string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER("ST");
+
                 string sItemCode = row.Cells[1].Text;
                 double dQty = double.Parse(row.Cells[3].Text);
-                double dPrice = double.Parse(row.Cells[4].Text);
+                string sUOM = row.Cells[4].Text;
+                double dPrice = double.Parse(row.Cells[5].Text);
 
-                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), oSeriesNumber.generateSeriesNumber("STR"), sItemCode, dQty, dPrice, "PCS", "Russe");
+                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), SeriesNum , sItemCode, dQty, dPrice, sUOM, "Russe");
+                
+                //Update Stock Inventory
+                //oSupplier.UPDATE_STOCK_INVENTORY(sItemCode, dQty);
             }
 
+
+
+            //Update Series Number
+            oSeriesNumber.UPDATE_SERIES_NUMBER("ST");
 
             //Prompt a message.
 
             lblMessageSuccess.Text = "Transaction successfully recorded.";
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgSuccessModal').modal('show');</script>", false);
    
-
-            //    DateTime dtDateTrans = Convert.ToDateTime(txtDateTrans.Text);
-
-            //    foreach (GridViewRow row in gvSupplierItems.Rows)
-            //    {
-            //        string sCustomer = row.Cells[0].Text;
-            //        string sTransTypeCode = row.Cells[1].Text;
-            //        string sItemCode = row.Cells[2].Text;
-            //        double dPrice = double.Parse(row.Cells[5].Text);
-            //        double dQty = double.Parse(row.Cells[4].Text);
-
-
-            //        oXtra.INSERT_INVENTORY_TRANS(sCustomer, sTransTypeCode, sItemCode, "", dQty, dPrice, dtDateTrans, "USER-TEST");
-            //        oXtra.UPDATE_INVENTORY_DATA(sItemCode, dQty, dtDateTrans, sTransTypeCode);
-
-            //        clearFields();
-            //        //Clear Temporary table
-
-            //        gvSupplierItems.DataSource = null;
-            //        gvSupplierItems.DataBind();
-
-            //        createTempBranch();
-
-
-            //        txtDateTrans.Enabled = true;
-
-
-            //    }
-            //}
-
+            //Clear Fields
+            resetFields();
+       
         }
     }
 
-      protected void ddTransType_SelectedIndexChanged(object sender, EventArgs e)
-      {
-      
-      }
+     
 
       protected void lnkAdd_Click(object sender, EventArgs e)
       {
-          double itemPrice = oXtra.getItemPrice(ddItemList.SelectedValue.ToString());
+         
 
           if (ddItemList.SelectedIndex == 0 || string.IsNullOrEmpty(txtDateTrans.Text)|| ddSupplierList.SelectedIndex == 0 || string.IsNullOrEmpty(txtQuantity.Text))
           {
@@ -136,8 +124,8 @@ public partial class Transaction : System.Web.UI.Page
               }
               else
               {
-               
-             
+
+              double itemPrice = Convert.ToDouble(lblPrice.Text);
               //Instantiate table 
               DataTable dt = (DataTable)Session["tempSupplierOrder"];
 
@@ -145,12 +133,13 @@ public partial class Transaction : System.Web.UI.Page
               DataRow newRow = dt.NewRow();
               
               newRow["ITEMCODE"] = ddItemList.SelectedValue.ToString();
-              newRow["DESCRIPTION"] = ddItemList.SelectedItem.Text + "***" + oSeriesNumber.generateSeriesNumber("STR");
+              newRow["DESCRIPTION"] = ddItemList.SelectedItem.Text;
               newRow["QTY"] = double.Parse(txtQuantity.Text);
-
+              newRow["UOM"] = lblUOM.Text;
               newRow["PRICE"] = itemPrice;
-              newRow["TOTAL"] = double.Parse(txtQuantity.Text) * itemPrice;
-              //      newRow["DATETRANS"] = Convert.ToDateTime(txtDateTrans.Text);
+              double sSubTotal = double.Parse(txtQuantity.Text) * itemPrice;
+              newRow["TOTAL"] = string.Format("{0:N}", sSubTotal);
+             
               dt.Rows.Add(newRow);
 
               Session["tempSupplierOrder"] = dt;
@@ -159,22 +148,27 @@ public partial class Transaction : System.Web.UI.Page
               gvSupplierItems.DataBind();
 
               ddItemList.SelectedIndex = 0;
-              txtQuantity.Text = "1";
 
-              txtDateTrans.Enabled = false;
 
+              lblRunningTotal.Text =  string.Format("{0:N}", computeRunningTotal());
+
+              //Clear Text
+              lblUOM.Text = "";
+              lblPrice.Text = "";
+              txtQuantity.Text = "";
               
             }
           }
       }
 
-      private void createTempBranch()
+      private void createTempItemSupplier()
       {
           DataTable dt = new DataTable();
-          //dt.Columns.Add("SUPPLIERCODE", System.Type.GetType("System.String"));
+
           dt.Columns.Add("ITEMCODE", System.Type.GetType("System.String"));
           dt.Columns.Add("DESCRIPTION", System.Type.GetType("System.String"));
           dt.Columns.Add("QTY", System.Type.GetType("System.Double"));
+          dt.Columns.Add("UOM", System.Type.GetType("System.String"));
           dt.Columns.Add("PRICE", System.Type.GetType("System.Double"));
           dt.Columns.Add("TOTAL", System.Type.GetType("System.Double"));
 
@@ -184,35 +178,21 @@ public partial class Transaction : System.Web.UI.Page
 
       private void displaySupplierList()
       {
-          oXtra.GetSupplierList(ddSupplierList);
+
+          oSupplier.GET_SUPPLIER_LIST_DD(ddSupplierList);
           ddSupplierList.Items.Insert(0, new ListItem("-- SELECT SUPPLIER --"));
       }
 
-      private void displayBranchList()
-      {
-
-       
-      }
-
-      private void clearFields()
-      {
-          txtDateTrans.Text = "";
-          ddSupplierList.SelectedIndex = 0;
-          ddItemList.SelectedIndex = 0;
-          txtQuantity.Text = "";
-          lblPrice.Text = "";
-      }
+     
+     
 
       private void displayItemList()
       {
-          oXtra.GetItemList(ddItemList);
+          oItem.GET_ITEM_LIST_DD(ddItemList);
           ddItemList.Items.Insert(0, new ListItem("-- SELECT ITEM --"));
       }
 
-      private void displayTransTypeList()
-      {
-      }
-
+    
 
     //Check if item exist on gridview
     
@@ -236,6 +216,22 @@ public partial class Transaction : System.Web.UI.Page
 
 
           return bExist;
+      }
+
+      private double computeRunningTotal()
+      {
+          double dRunningTotal = 0;
+
+          foreach (GridViewRow gvr in gvSupplierItems.Rows)
+          {
+              if (gvr.RowType == DataControlRowType.DataRow)
+              {
+                  dRunningTotal = dRunningTotal + Convert.ToDouble(gvr.Cells[6].Text);
+
+              }
+          }
+
+          return dRunningTotal;
       }
 
     //Remove Button Action
@@ -264,5 +260,54 @@ public partial class Transaction : System.Web.UI.Page
 
           gvSupplierItems.DataSource = dt;
           gvSupplierItems.DataBind();
+      }
+
+      protected void ddSupplierList_SelectedIndexChanged(object sender, EventArgs e)
+      {
+        DataTable dtSupplierList = oSupplier.GET_SUPPLIER_LIST();
+
+        DataRow[] dr;
+        dr = dtSupplierList.Select("SupplierCode = '" + ddSupplierList.SelectedValue.ToString() + "'");
+
+        if (dr.Length > 0)
+        {
+            //Will display the selected supplier info
+            foreach (DataRow row in dr)
+            {
+                lblSupplierContact.Text = row["ContactPerson"].ToString();
+                lblSupplierNumbers.Text = row["Telephone"].ToString() + " " + row["MobilePhone"].ToString();
+                lblSupplierAddress.Text = row["Address"].ToString();
+            }
+        }
+
+      }
+
+
+    //RESET ALL Fields
+      private void resetFields()
+      {
+          txtDateTrans.Text = "";
+          txtDeliveryDate.Text = "";
+          txtRemarks.Text = "";
+          txtQuantity.Text = "";
+
+          ddSupplierList.SelectedIndex = 0;
+          ddItemList.SelectedIndex = 0;
+
+
+
+          lblPrice.Text = "";
+          lblUOM.Text = "";
+          lblRunningTotal.Text = "";
+          lblSupplierAddress.Text = "";
+          lblSupplierContact.Text = "";
+          lblSupplierNumbers.Text = "";
+          //Clearing Gridview
+          gvSupplierItems.DataSource = null;
+          gvSupplierItems.DataBind();
+
+          //Will Clear local data table
+          DataTable dt = (DataTable)Session["tempSupplierOrder"];
+          dt.Clear();
       }
 }
