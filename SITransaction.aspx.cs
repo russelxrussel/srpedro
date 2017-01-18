@@ -132,8 +132,8 @@ public partial class Transaction : System.Web.UI.Page
               //Add New Row
               DataRow newRow = dt.NewRow();
               
-              newRow["ITEMCODE"] = ddItemList.SelectedValue.ToString();
-              newRow["DESCRIPTION"] = ddItemList.SelectedItem.Text;
+              newRow["CODE"] = ddItemList.SelectedValue.ToString();
+              newRow["DESC"] = ddItemList.SelectedItem.Text;
               newRow["QTY"] = double.Parse(txtQuantity.Text);
               newRow["UOM"] = lblUOM.Text;
               newRow["PRICE"] = itemPrice;
@@ -150,7 +150,7 @@ public partial class Transaction : System.Web.UI.Page
               ddItemList.SelectedIndex = 0;
 
 
-              lblRunningTotal.Text =  string.Format("{0:N}", computeRunningTotal());
+              lblRunningTotal.Text =  string.Format("Total Cost: {0:N}", computeRunningTotal());
 
               //Clear Text
               lblUOM.Text = "";
@@ -165,8 +165,8 @@ public partial class Transaction : System.Web.UI.Page
       {
           DataTable dt = new DataTable();
 
-          dt.Columns.Add("ITEMCODE", System.Type.GetType("System.String"));
-          dt.Columns.Add("DESCRIPTION", System.Type.GetType("System.String"));
+          dt.Columns.Add("CODE", System.Type.GetType("System.String"));
+          dt.Columns.Add("DESC", System.Type.GetType("System.String"));
           dt.Columns.Add("QTY", System.Type.GetType("System.Double"));
           dt.Columns.Add("UOM", System.Type.GetType("System.String"));
           dt.Columns.Add("PRICE", System.Type.GetType("System.Double"));
