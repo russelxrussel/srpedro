@@ -310,4 +310,18 @@ public partial class Transaction : System.Web.UI.Page
           DataTable dt = (DataTable)Session["tempSupplierOrder"];
           dt.Clear();
       }
+
+
+      private void PRINT_NOW(string url)
+      {
+          string s = "window.open('" + url + "', 'popup_window', 'width=1024, height=768, left=0, top=0, resizable=yes');";
+          ScriptManager.RegisterClientScriptBlock(this, this.Page.GetType(), "ReportScript", s, true);
+      }
+
+      protected void lnkPrintTransaction_Click(object sender, EventArgs e)
+      {
+          Session["S_SSNUM"] = txtPrintTransaction.Text;
+          PRINT_NOW("SITransaction_Report.aspx");
+
+      }
 }

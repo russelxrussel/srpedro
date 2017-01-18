@@ -1,24 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "sr_pedro_project_2017", ".", "{4017F35E-36F7-479B-A468-C67A03E1855B}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "xsrp", ".", "{4017F35E-36F7-479B-A468-C67A03E1855B}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/sr_pedro_project_2017"
-		Debug.AspNetCompiler.PhysicalPath = "..\sr_pedro_project_2017\"
+		Debug.AspNetCompiler.PhysicalPath = "..\xsrp\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\sr_pedro_project_2017\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/sr_pedro_project_2017"
-		Release.AspNetCompiler.PhysicalPath = "..\sr_pedro_project_2017\"
+		Release.AspNetCompiler.PhysicalPath = "..\xsrp\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\sr_pedro_project_2017\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1561"
+		VWDPort = "8734"
 	EndProjectSection
 EndProject
 Global

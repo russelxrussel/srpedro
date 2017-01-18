@@ -20,7 +20,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
 
         var prm = Sys.WebForms.PageRequestManager.getInstance();
@@ -91,16 +91,30 @@
                 <ContentTemplate>
 
     <div class="container container_content">
+        <div class="row">
+            <div class="col-md-3">
+                <asp:Panel runat="server" ID="xPanelControls">
+                    <asp:LinkButton runat="server" ID="U_Save_S" CssClass="btn btn-success" OnClick="U_Save_S_Click"><span class="glyphicon glyphicon-floppy-saved"></span> SAVE</asp:LinkButton>
+                </asp:Panel>
+            </div>
+            
+            <div class="col-md-3 col-md-offset-6">
+                <div class="input-group input-group-sm">
+                  
+                    <asp:TextBox runat="server" ID="txtPrintTransaction" CssClass="form-control" 
+                        placeholder="Print Transaction #"></asp:TextBox>
+                      <span class="input-group-addon"><asp:LinkButton runat="server" 
+                        ID="lnkPrintTransaction" CssClass="btn btn-primary btn-sm" 
+                        onclick="lnkPrintTransaction_Click">Print</asp:LinkButton>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <hr />
         <div class="panel panel-default">
             <div class="panel-heading">
-                <asp:Panel runat="server" ID="xPanelControls">
-                    <div class="input-group input-group-sm">
-                        <ul class="list-inline">
-                            <li>
-                                <asp:LinkButton runat="server" ID="U_Save_S" CssClass="btn btn-success" OnClick="U_Save_S_Click"><span class="glyphicon glyphicon-floppy-saved"></span> SAVE</asp:LinkButton></li>
-                        </ul>
-                    </div>
-                </asp:Panel>
             </div>
          
                     <div class="panel-body">
@@ -119,7 +133,7 @@
                             <!-- Document Date-->
                             <div class="col-md-3 col-md-push-6">
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                     <asp:TextBox runat="server" ID="txtDateTrans" CssClass="calendarInput form-control"
                                         placeholder="Document Date"></asp:TextBox>
@@ -155,7 +169,7 @@
                             <!-- Delivery Date-->
                             <div class="col-md-3 col-md-push-3">
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                     <asp:TextBox runat="server" ID="txtDeliveryDate" CssClass="calendarInput form-control"
                                         placeholder="Delivery Date"></asp:TextBox>
@@ -182,7 +196,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="input-group input-group-sm">
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-record"></span>
+                                                    <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-record"></span>
                                                     </span>
                                                     <asp:DropDownList ID="ddItemList" runat="server" AutoPostBack="True" CssClass="dropdown form-control"
                                                         OnSelectedIndexChanged="ddItemList_SelectedIndexChanged">
@@ -195,8 +209,8 @@
                                         <div class="row">
                                         <div class="col-md-12">
                                           <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">UOM</span><asp:Label runat="server" ID="lblUOM" CssClass="form-control"></asp:Label>
-                                                      <span class="input-group-addon">PRICE</span><asp:Label runat="server" ID="lblPrice" CssClass="form-control text-danger"></asp:Label>
+                                            <span class="input-group-addon alert-warning">UOM</span><asp:Label runat="server" ID="lblUOM" CssClass="form-control"></asp:Label>
+                                                      <span class="input-group-addon alert-warning">PRICE</span><asp:Label runat="server" ID="lblPrice" CssClass="form-control text-danger"></asp:Label>
                                           </div>
                                         </div>
                                         </div>
@@ -205,9 +219,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group input-group-sm">
-                                                    <span class="input-group-addon">Quantity<%--<span class="glyphicon glyphicon-asterisk"></span>--%>
-                                                    </span>
-                                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtQuantity" placeholder="Quantity"></asp:TextBox>
+                                                    <span class="input-group-addon alert-danger">Quantity<%--<span class="glyphicon glyphicon-asterisk"></span>--%></span><asp:TextBox runat="server" CssClass="form-control" ID="txtQuantity" placeholder="Quantity"></asp:TextBox>
                                                 </div>
                                             </div>
                                        
