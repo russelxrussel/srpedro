@@ -52,24 +52,24 @@ public partial class ItemEntry : System.Web.UI.Page
         ddUOM.SelectedIndex = 0;
     }
 
-    protected void lnkSaveItem_Click(object sender, EventArgs e)
-    {
-        if (!string.IsNullOrEmpty(txtItemCode.Text) && !string.IsNullOrEmpty(txtItemDescription.Text))
-        {
-            oXtra.INSERT_ITEM_MASTER(txtItemCode.Text, txtItemDescription.Text, ddUOM.SelectedValue.ToString(), double.Parse(txtItemPrice.Text));
-            oXtra.INSERT_ITEM_INVENTORY(txtItemCode.Text, double.Parse(txtBeginBal.Text), double.Parse(txtStockLimit.Text));
+    //protected void lnkSaveItem2_Click(object sender, EventArgs e)
+    //{
+    //    if (!string.IsNullOrEmpty(txtItemCode.Text) && !string.IsNullOrEmpty(txtItemDescription.Text))
+    //    {
+    //        oXtra.INSERT_ITEM_MASTER(txtItemCode.Text, txtItemDescription.Text, ddUOM.SelectedValue.ToString(), double.Parse(txtItemPrice.Text));
+    //        oXtra.INSERT_ITEM_INVENTORY(txtItemCode.Text, double.Parse(txtBeginBal.Text), double.Parse(txtStockLimit.Text));
 
-            clearItemDataFields();
-            //Recreate temporary table
+    //        clearItemDataFields();
+    //        //Recreate temporary table
 
 
 
-        }
-        else
-        {
-            //No effect!
-        }
-    }
+    //    }
+    //    else
+    //    {
+    //        //No effect!
+    //    }
+    //}
 
     protected void lnkCreateItem_Click(object sender, EventArgs e)
     {
@@ -116,4 +116,25 @@ public partial class ItemEntry : System.Web.UI.Page
       
     }
 
+    protected void lnkCreateUpdate_Click(object sender, EventArgs e)
+    {
+        if (string.IsNullOrEmpty(txtItemDescription.Text) || string.IsNullOrEmpty(txtItemPrice.Text) || string.IsNullOrEmpty(txtStockLimit.Text))
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Alert", "<script>alert('Required Field must fill up');</script>", false);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#ItemContainer').modal('show');</script>", false);
+
+        }
+        else
+        {
+            //If Add link hit
+            if (ViewState["ACTION"] == "ADD")
+            { 
+            
+            }
+
+            //Refresh the current web page  
+            Response.Redirect(Request.RawUrl);
+
+        }
+    }
 }

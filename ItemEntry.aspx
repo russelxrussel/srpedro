@@ -35,7 +35,7 @@
     <div class="col-md-3">
     
     
- <asp:LinkButton runat="server" ID="lnkSaveItem" CssClass="btn btn-success btn-sm" OnClick="lnkSaveItem_Click"><span class="glyphicon glyphicon-floppy-saved"></span> CREATE</asp:LinkButton>
+
  <asp:LinkButton runat="server" ID="lnkCreateItem" 
         CssClass="btn btn-primary btn-sm" onclick="lnkCreateItem_Click" ><span class="glyphicon glyphicon-plus-sign"></span> CREATE</asp:LinkButton>
 </div>
@@ -204,7 +204,8 @@
               </div>
 
                 <div class="modal-footer">
-                <asp:LinkButton runat="server" ID="lnkCreateUpdate" CssClass="btn btn-success btn-sm"></asp:LinkButton>
+                <asp:LinkButton runat="server" ID="lnkCreateUpdate" 
+                        CssClass="btn btn-success btn-sm" onclick="lnkCreateUpdate_Click"></asp:LinkButton>
                
                 <asp:LinkButton runat="server" ID="lnkClose" CssClass="btn btn-danger btn-sm" data-dismiss="modal">Cancel</asp:LinkButton>
 

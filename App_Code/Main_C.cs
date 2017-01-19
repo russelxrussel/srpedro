@@ -501,6 +501,11 @@ namespace SRPEDRO
 
         }
 
+
+        public void INSERT_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, string _uomCode, double _itemPrice, bool _itemStatus, string _remarks, double _begStock, double _minimumStock, string _userCode)
+        { 
+        
+        }
     }
     
 }
