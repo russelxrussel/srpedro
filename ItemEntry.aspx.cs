@@ -52,24 +52,7 @@ public partial class ItemEntry : System.Web.UI.Page
         ddUOM.SelectedIndex = 0;
     }
 
-    //protected void lnkSaveItem2_Click(object sender, EventArgs e)
-    //{
-    //    if (!string.IsNullOrEmpty(txtItemCode.Text) && !string.IsNullOrEmpty(txtItemDescription.Text))
-    //    {
-    //        oXtra.INSERT_ITEM_MASTER(txtItemCode.Text, txtItemDescription.Text, ddUOM.SelectedValue.ToString(), double.Parse(txtItemPrice.Text));
-    //        oXtra.INSERT_ITEM_INVENTORY(txtItemCode.Text, double.Parse(txtBeginBal.Text), double.Parse(txtStockLimit.Text));
-
-    //        clearItemDataFields();
-    //        //Recreate temporary table
-
-
-
-    //    }
-    //    else
-    //    {
-    //        //No effect!
-    //    }
-    //}
+   
 
     protected void lnkCreateItem_Click(object sender, EventArgs e)
     {
@@ -127,7 +110,14 @@ public partial class ItemEntry : System.Web.UI.Page
         else
         {
             //If Add link hit
-            if (ViewState["ACTION"] == "ADD")
+            //Add New Item
+            if (ViewState["ACTION"].ToString() == "ADD")
+            {
+                oItem.INSERT_ITEM_INVENTORY_DATA(oSeries.GENERATE_SERIES_NUMBER_MASTER("ITM"), txtItemDescription.Text, ddUOM.SelectedValue.ToString(), Convert.ToDouble(txtItemPrice.Text),
+                                                chkItemStatus.Checked, txtItemRemarks.Text, Convert.ToDouble(txtBeginBal.Text), Convert.ToDouble(txtStockLimit.Text), "AdminTest", "ITM");
+
+            }
+            else if (ViewState["ACTION"].ToString() == "MODIFY")
             { 
             
             }

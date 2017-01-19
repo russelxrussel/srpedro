@@ -9,7 +9,7 @@
 
 <img src="images/sp.png" class="img-responsive img-thumbnail" />
 <hr />
-<h2>Demo System</h2>
+<h2>HOME PAGE</h2>
 
 
 </div>
