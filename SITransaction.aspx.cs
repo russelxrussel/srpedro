@@ -59,7 +59,7 @@ public partial class Transaction : System.Web.UI.Page
 
         //Saving Data on Supplier Transaction HDR
 
-        oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDeliveryDate.Text), oSeriesNumber.GENERATE_SERIES_NUMBER("ST"), txtRemarks.Text, "RUssel");
+        oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDeliveryDate.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, "RUssel");
 
 
         if (gvSupplierItems.Rows.Count > 0)
@@ -68,7 +68,7 @@ public partial class Transaction : System.Web.UI.Page
             //Saving Rows Transaction of Supplier
             foreach (GridViewRow row in gvSupplierItems.Rows)
             {
-                string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER("ST");
+                string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST");
 
                 string sItemCode = row.Cells[1].Text;
                 double dQty = double.Parse(row.Cells[3].Text);
@@ -249,7 +249,7 @@ public partial class Transaction : System.Web.UI.Page
           for (int i = dt.Rows.Count - 1; i >= 0; i--)
           {
               DataRow drow = dt.Rows[i];
-              if (drow["ITEMCODE"].ToString() == selCode)
+              if (drow["CODE"].ToString() == selCode)
                   drow.Delete();
           }
 
@@ -260,6 +260,8 @@ public partial class Transaction : System.Web.UI.Page
 
           gvSupplierItems.DataSource = dt;
           gvSupplierItems.DataBind();
+
+          lblRunningTotal.Text = string.Format("Total Cost: {0:N}", computeRunningTotal());
       }
 
       protected void ddSupplierList_SelectedIndexChanged(object sender, EventArgs e)

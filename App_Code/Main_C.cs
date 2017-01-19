@@ -476,37 +476,16 @@ namespace SRPEDRO
             }
         }
 
-        //UPDATE STOCK ITEM IN INVENTORY
-        //disable instead inject on [Trans].[SP_INSERT_SUPPLIER_TRANS_ROWS]
-    
-        //public void UPDATE_STOCK_INVENTORY(string _itemCode, double _itemQty)
-        //{
-        //    using (SqlConnection cn = new SqlConnection(CS))
-        //    {
-        //        using (SqlCommand cmd = new SqlCommand("Trans.SP_UPDATE_STOCK_INVENTORY_FROM_SUPPLIER", cn))
-        //        {
-        //            cmd.CommandType = CommandType.StoredProcedure;
-
-        //            cmd.Parameters.AddWithValue("@ITEMCODE", _itemCode);
-        //            cmd.Parameters.AddWithValue("@QTY", _itemQty);
-
-        //            cn.Open();
-
-        //            cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //}
-
     }
 
     public class Item_C : cBase
     {
         // DATA SELECTION
 
-
+        //Get View
         public DataTable GET_ITEM_LIST()
         {
-            string strSQL = "Master.SP_GET_ITEM_LIST";
+            string strSQL = "Master.V_SP_GET_ITEM_LIST";
             return queryCommandDT_StoredProc(strSQL);
         }
 
