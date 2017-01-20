@@ -44,9 +44,8 @@ public partial class ItemEntry : System.Web.UI.Page
 
     private void clearItemDataFields()
     {
-        txtItemCode.Text = "";
+        //txtItemCode.Text = "";
         txtItemDescription.Text = "";
-        txtBeginBal.Text = "";
         txtStockLimit.Text = "";
         txtItemPrice.Text = "";
         ddUOM.SelectedIndex = 0;
@@ -56,8 +55,17 @@ public partial class ItemEntry : System.Web.UI.Page
 
     protected void lnkCreateItem_Click(object sender, EventArgs e)
     {
-        ViewState["ACTION"] = "ADD";         
-        lblActionTitle.Text = "Create New Item" + oSeries.GENERATE_SERIES_NUMBER_MASTER("ITM");
+        ViewState["ACTION"] = "ADD"; 
+
+        //Text of Save Button
+        lnkCreateUpdate.Text = "SAVE";
+
+        //Enable UOM
+        ddUOM.Enabled = true;
+
+        chkItemStatus.Checked = true;
+
+        lblActionTitle.Text = "Create New Item";
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#ItemContainer').modal('show');</script>", false);
     }
 
@@ -84,7 +92,6 @@ public partial class ItemEntry : System.Web.UI.Page
                 ddUOM.SelectedValue = row["UomCode"].ToString();
                 txtItemPrice.Text = row["ItemPrice"].ToString();
                 txtStockLimit.Text = row["MinimumStockLevel"].ToString();
-                txtBeginBal.Text = row["BegStock"].ToString();
                 txtItemRemarks.Text = row["Remarks"].ToString();
 
 
@@ -94,7 +101,18 @@ public partial class ItemEntry : System.Web.UI.Page
         }
 
         ViewState["ACTION"] = "MODIFY";
-        lblActionTitle.Text = "Modify Item" + selCode;
+
+        //Text of Save Button
+        lnkCreateUpdate.Text = "UPDATE";
+
+        //Disable UOM
+        ddUOM.Enabled = false;
+
+        lblActionTitle.Text = "Modify Item - " + selCode;
+        
+        //Will use as reference to update item.
+        ViewState["SEL_ITEMCODE"] = selCode;
+
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#ItemContainer').modal('show');</script>", false);
       
     }
@@ -113,13 +131,15 @@ public partial class ItemEntry : System.Web.UI.Page
             //Add New Item
             if (ViewState["ACTION"].ToString() == "ADD")
             {
-                oItem.INSERT_ITEM_INVENTORY_DATA(oSeries.GENERATE_SERIES_NUMBER_MASTER("ITM"), txtItemDescription.Text, ddUOM.SelectedValue.ToString(), Convert.ToDouble(txtItemPrice.Text),
-                                                chkItemStatus.Checked, txtItemRemarks.Text, Convert.ToDouble(txtBeginBal.Text), Convert.ToDouble(txtStockLimit.Text), "AdminTest", "ITM");
+                oItem.INSERT_ITEM_INVENTORY_DATA(oSeries.GENERATE_SERIES_NUMBER_MASTER("ITM"), txtItemDescription.Text.ToUpper(), ddUOM.SelectedValue.ToString(), Convert.ToDouble(txtItemPrice.Text),
+                                                chkItemStatus.Checked, txtItemRemarks.Text, Convert.ToDouble(txtStockLimit.Text), "AdminTest", "ITM");
 
             }
             else if (ViewState["ACTION"].ToString() == "MODIFY")
-            { 
-            
+            {
+                oItem.UPDATE_ITEM_INVENTORY_DATA(ViewState["SEL_ITEMCODE"].ToString(), txtItemDescription.Text.ToUpper(), Convert.ToDouble(txtItemPrice.Text),
+                                                   chkItemStatus.Checked, txtItemRemarks.Text, Convert.ToDouble(txtStockLimit.Text), "AdminTest");
+
             }
 
             //Refresh the current web page  

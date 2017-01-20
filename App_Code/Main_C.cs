@@ -396,6 +396,8 @@ namespace SRPEDRO
         }
     }
 
+
+
     public class Supplier_C : cBase
     {
 
@@ -502,7 +504,7 @@ namespace SRPEDRO
         }
 
 
-        public void INSERT_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, string _uomCode, double _itemPrice, bool _itemStatus, string _remarks, double _begStock, double _minimumStock, string _userCode, string _prefixCode)
+        public void INSERT_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, string _uomCode, double _itemPrice, bool _itemStatus, string _remarks, double _minimumStock, string _userCode, string _prefixCode)
         {
             using (SqlConnection cn = new SqlConnection(CS))
             {
@@ -516,7 +518,6 @@ namespace SRPEDRO
                     cmd.Parameters.AddWithValue("@ITEMPRICE", _itemPrice);
                     cmd.Parameters.AddWithValue("@ITEMSTATUS", _itemStatus);
                     cmd.Parameters.AddWithValue("@REMARKS", _remarks);
-                    cmd.Parameters.AddWithValue("@BEGSTOCK", _begStock);
                     cmd.Parameters.AddWithValue("@MINIMUMSTOCKLEVEL", _minimumStock);
                     cmd.Parameters.AddWithValue("@USERCODE", _userCode);
                     cmd.Parameters.AddWithValue("@PREFIXCODE", _prefixCode);
@@ -528,6 +529,33 @@ namespace SRPEDRO
                 }
             }
         }
+
+        public void UPDATE_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, double _itemPrice, bool _itemStatus, string _remarks, double _minimumStock, string _userCode)
+        {
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("Master.SP_UPDATE_ITEM_INVENTORY", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ITEMCODE", _itemCode);
+                    cmd.Parameters.AddWithValue("@ITEMNAME", _itemName);
+                    cmd.Parameters.AddWithValue("@ITEMPRICE", _itemPrice);
+                    cmd.Parameters.AddWithValue("@ITEMSTATUS", _itemStatus);
+                    cmd.Parameters.AddWithValue("@REMARKS", _remarks);
+                    cmd.Parameters.AddWithValue("@MINIMUMSTOCKLEVEL", _minimumStock);
+                    cmd.Parameters.AddWithValue("@USERCODE", _userCode);
+
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+
+
     }
     
 }

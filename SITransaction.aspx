@@ -148,33 +148,42 @@
                                                         placeholder="Delivery Date"></asp:TextBox>
                                                 </div>
                                             </li>
-                                            <hr />
                                             <li class="list-group-item">
                                                 <!-- Supplier-->
                                                 <div class="input-group input-group-sm">
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-record"></span>
+                                                    <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-record"></span>
                                                     </span>
                                                     <asp:DropDownList ID="ddSupplierList" runat="server" CssClass="dropdown form-control"
                                                         OnSelectedIndexChanged="ddSupplierList_SelectedIndexChanged" AutoPostBack="True">
                                                     </asp:DropDownList>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <!--Search Supplier -->
+                                             <%--   </div>
+
+                                                 <!--Search Supplier -->
                                         <div class="input-group input-group-sm">
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
                                             </span>
-                                            <asp:TextBox runat="server" ID="txtSearchSupplier" CssClass="form-control" ClientIDMode="Static">
-                                            </asp:TextBox>
+                                            
                                             <div id="divSearch">
-                                            </div>
+                                            </div>--%>
                                             <strong>
                                                 <asp:Label runat="server" ID="lblSupplierContact" CssClass="form-control"></asp:Label></strong>
                                             <asp:Label runat="server" ID="lblSupplierNumbers" CssClass="form-control text-nowrap"></asp:Label>
                                             <asp:Label runat="server" ID="lblSupplierAddress" CssClass="form-control text-nowrap"></asp:Label>
                                             <!--Hidden Field -->
                                             <asp:HiddenField ID="hfSupplierCode" runat="server" />
+
+                                            <asp:TextBox runat="server" ID="txtSearchSupplier" Visible="False" CssClass="form-control" ClientIDMode="Static">
+                                            </asp:TextBox>
                                         </div>
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                <!-- Remarks-->
+                                                <asp:TextBox runat="server" ID="txtRemarks" CssClass="form-control" placeholder="General Remarks"
+                                                    Rows="1" TextMode="MultiLine"></asp:TextBox>
+                                            </li>
+                                        </ul>
+                                       
                                     </div>
                                     <!--End of Supplier Panel Body -->
                                 </div>
@@ -226,11 +235,7 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item">
-                                                <!-- Remarks-->
-                                                <asp:TextBox runat="server" ID="txtRemarks" CssClass="form-control" placeholder="General Remarks"
-                                                    Rows="1" TextMode="MultiLine"></asp:TextBox>
-                                            </li>
+                                            
                                         </ul>
                                         <!--Display added  Items -->
                                         <div class="panel panel-default">

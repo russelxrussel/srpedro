@@ -69,13 +69,14 @@ public partial class Transaction : System.Web.UI.Page
             foreach (GridViewRow row in gvSupplierItems.Rows)
             {
                 string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST");
+                Session["S_SSNUM"] = SeriesNum;
 
                 string sItemCode = row.Cells[1].Text;
                 double dQty = double.Parse(row.Cells[3].Text);
                 string sUOM = row.Cells[4].Text;
                 double dPrice = double.Parse(row.Cells[5].Text);
 
-                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), SeriesNum , sItemCode, dQty, dPrice, sUOM, "Russe");
+                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), SeriesNum , sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
                 
                 //Update Stock Inventory
                 //oSupplier.UPDATE_STOCK_INVENTORY(sItemCode, dQty);
@@ -86,13 +87,18 @@ public partial class Transaction : System.Web.UI.Page
             //Update Series Number
             oSeriesNumber.UPDATE_SERIES_NUMBER("ST");
 
-            //Prompt a message.
 
+            //Direct to the print
+            PRINT_NOW("SITransaction_Report.aspx");
+
+            //Prompt a message.
             lblMessageSuccess.Text = "Transaction successfully recorded.";
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgSuccessModal').modal('show');</script>", false);
    
             //Clear Fields
             resetFields();
+
+         
        
         }
     }

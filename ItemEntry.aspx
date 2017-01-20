@@ -77,12 +77,12 @@
             <ItemStyle HorizontalAlign="Center" />
             </asp:CheckBoxField>
              
-             <asp:TemplateField>
+             <%--<asp:TemplateField>
             <ItemTemplate>
             <asp:LinkButton ID="lnkItemTransaction" runat="server" CssClass="btn btn-warning btn-sm">View Transaction</asp:LinkButton>
             </ItemTemplate>
                  <ItemStyle HorizontalAlign="Center" />
-            </asp:TemplateField>
+            </asp:TemplateField>--%>
            
         </Columns>
     
@@ -90,22 +90,6 @@
  
     </div>
    </div>
-
-
-   <!-- ItemCode -->
-        <div class="form-group row">
-        
-            <div class="col-md-2">
-                <div class="input-group input-group-sm">
-                    <span class="input-group-addon">CODE: </span>
-                    <asp:TextBox runat="server" CssClass="form-control text-uppercase" ID="txtItemCode" MaxLength="6" placeholder="Item Code" required pattern="^[a-zA-Z ]+$"></asp:TextBox>
-                </div>
-
-            </div>
-      
-        </div>
-
-    
 
 
         <!--MESSAGE MODAL SECTION-->
@@ -172,29 +156,20 @@
                         </div>
                     </div>
 
-                     <!-- BEGINNING BALANCE -->
-                    <div class="col-md-4">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon">BEG QTY:</span>
-                            <asp:TextBox runat="server" CssClass="form-control" ID="txtBeginBal" placeholder="Beginning Quantity"></asp:TextBox>
-                        </div>
-                    </div>
-                    
-                    </div>
-                    </li>
-
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-4">
+                    <!--Status-->
+                     <div class="col-md-4">
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-addon">STATUS:</span>
                                     <asp:CheckBox runat="server" ID="chkItemStatus" CssClass="form-control" />
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                    
+                    
+                    </div>
+                    </li>
+
+                    <li class="list-group-item">
                                 <asp:TextBox runat="server" ID="txtItemRemarks" TextMode="MultiLine" Rows="2" placeholder="Item Remarks"></asp:TextBox>
-                            </div>
-                        </div>
 
                     </li>
 
