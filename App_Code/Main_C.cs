@@ -397,6 +397,33 @@ namespace SRPEDRO
     }
 
 
+    public class Branch_C : cBase 
+    {
+        /* DATA SELECTION
+         
+            */
+
+
+        public DataTable GET_BRANCH_LIST()
+        {
+            string strSQL = "Master.SP_GET_BRANCH_LIST";
+            return queryCommandDT_StoredProc(strSQL);
+        }
+
+        //Method with Parameter  Supplier
+        public void GET_BRANCH_LIST_DD(DropDownList dd)
+        {
+            DataTable dt = GET_BRANCH_LIST();
+
+            dd.DataSource = dt;
+            dd.DataValueField = dt.Columns["SupplierCode"].ToString();
+            dd.DataTextField = dt.Columns["SupplierName"].ToString();
+            dd.DataBind();
+
+
+        }
+    
+    }
 
     public class Supplier_C : cBase
     {

@@ -60,8 +60,8 @@ padding-top: 60px;
           <ul class="nav navbar-nav">
         <li><a href="Inventory.aspx">Inventory</a></li>
         <li><a href="ItemEntry.aspx">Item</a></li>
-        <li><a href="SITransaction.aspx">Transaction</a></li>
-        <li><a href="Branch_History.aspx">Branch</a></li>
+        <li><a href="BOTransaction.aspx">Branch Trans</a></li>
+        <li><a href="SITransaction.aspx">Supplier Trans</a></li>
         <li><a href="ItemTransactionReport.aspx" target="_blank">Summary Report</a></li>
         </ul>
          <ul class="nav navbar-nav navbar-right">
