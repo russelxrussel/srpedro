@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <hr />
-                <div class="panel panel-default">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                     </div>
                     <div class="panel-body">
@@ -238,7 +238,7 @@
                                             
                                         </ul>
                                         <!--Display added  Items -->
-                                        <div class="panel panel-default">
+                                        <div class="panel panel-warning">
                                             <div class="panel-heading">
                                                 List of Item(s) order from Supplier
                                             </div>

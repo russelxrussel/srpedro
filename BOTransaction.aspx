@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <hr />
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                     </div>
                     <div class="panel-body">
@@ -140,20 +140,20 @@
                                                 </div>
                                             </li>
                                             <li class="list-group-item">
-                                                <!-- Delivery Date-->
+                                                <!-- Release Date-->
                                                 <div class="input-group input-group-sm">
                                                     <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-calendar">
                                                     </span></span>
-                                                    <asp:TextBox runat="server" ID="txtDateNeeded" CssClass="calendarInput form-control"
-                                                        placeholder="Delivery Date"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtDateRelease" CssClass="calendarInput form-control"
+                                                        placeholder="Release Date"></asp:TextBox>
                                                 </div>
                                             </li>
                                             <li class="list-group-item">
-                                                <!-- Supplier-->
+                                                <!-- Branch -->
                                                 <div class="input-group input-group-sm">
                                                     <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-record"></span>
                                                     </span>
-                                                    <asp:DropDownList ID="ddBranchList" runat="server" CssClass="dropdown form-control"
+                                                    <asp:DropDownList ID="ddBranchList" runat="server" CssClass="dropdown form-control" OnSelectedIndexChanged="ddBranchList_SelectedIndexChanged"
                                                          AutoPostBack="True">
                                                     </asp:DropDownList>
                                              <%--   </div>
@@ -166,9 +166,10 @@
                                             <div id="divSearch">
                                             </div>--%>
                                             <strong>
-                                                <asp:Label runat="server" ID="lblSupplierContact" CssClass="form-control"></asp:Label></strong>
-                                            <asp:Label runat="server" ID="lblSupplierNumbers" CssClass="form-control text-nowrap"></asp:Label>
-                                            <asp:Label runat="server" ID="lblSupplierAddress" CssClass="form-control text-nowrap"></asp:Label>
+                                            <asp:Label runat="server" ID="lblBranchManager" CssClass="form-control"></asp:Label></strong>
+                                             <asp:Label runat="server" ID="lblBranchContact" CssClass="form-control"></asp:Label></strong>
+                                            <asp:Label runat="server" ID="lblBranchContactNumbers" CssClass="form-control text-nowrap"></asp:Label>
+                                            <asp:Label runat="server" ID="lblBranchAddress" CssClass="form-control text-nowrap"></asp:Label>
                                             <!--Hidden Field -->
                                             <asp:HiddenField ID="hfSupplierCode" runat="server" />
 
@@ -238,13 +239,13 @@
                                             
                                         </ul>
                                         <!--Display added  Items -->
-                                        <div class="panel panel-default">
+                                        <div class="panel panel-info">
                                             <div class="panel-heading">
-                                                List of Item(s) order from Supplier
+                                                List of Item(s) release to Branch
                                             </div>
                                             <div class="panel-body">
                                                 <div class="row">
-                                                    <asp:GridView runat="server" ID="gvSupplierItems" CssClass="table table-responsive table-condensed table-bordered">
+                                                    <asp:GridView runat="server" ID="gvBranchItems" CssClass="table table-responsive table-condensed table-bordered">
                                                         <Columns>
                                                             <asp:TemplateField ItemStyle-HorizontalAlign="Center">
                                                                 <ItemTemplate>

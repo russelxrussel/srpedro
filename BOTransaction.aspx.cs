@@ -13,20 +13,21 @@ public partial class Transaction : System.Web.UI.Page
     Main_C oMain = new Main_C();
     SeriesNumber_C oSeriesNumber = new SeriesNumber_C();
     Supplier_C oSupplier = new Supplier_C();
+    Branch_C oBranch = new Branch_C();
     Item_C oItem = new Item_C();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            displaySupplierList();
+            displayBranchList();
    
             displayItemList();
 
 
 
             //Create Temporary Table for Ordered item from Supplier
-            createTempItemSupplier();
+            createTempItemBranch();
 
 
 
@@ -59,37 +60,37 @@ public partial class Transaction : System.Web.UI.Page
 
         //Saving Data on Supplier Transaction HDR
 
-        oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateNeeded.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, "RUssel");
-
-
-        if (gvSupplierItems.Rows.Count > 0)
+      //  oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateNeeded.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, "RUssel");
+        oBranch.INSERT_BRANCH_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateRelease.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT"), txtRemarks.Text, "RUssel");
+        
+        if (gvBranchItems.Rows.Count > 0)
         {
         
             //Saving Rows Transaction of Supplier
-            foreach (GridViewRow row in gvSupplierItems.Rows)
+            foreach (GridViewRow row in gvBranchItems.Rows)
             {
-                string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST");
-                Session["S_SSNUM"] = SeriesNum;
+                string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT");
+                Session["S_BSNUM"] = SeriesNum;
 
                 string sItemCode = row.Cells[1].Text;
                 double dQty = double.Parse(row.Cells[3].Text);
                 string sUOM = row.Cells[4].Text;
                 double dPrice = double.Parse(row.Cells[5].Text);
 
-                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
+               // oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
+                oBranch.INSERT_BRANCH_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
                 
-                //Update Stock Inventory
-                //oSupplier.UPDATE_STOCK_INVENTORY(sItemCode, dQty);
+              
             }
 
 
 
             //Update Series Number
-            oSeriesNumber.UPDATE_SERIES_NUMBER("ST");
+            oSeriesNumber.UPDATE_SERIES_NUMBER("BT");
 
 
             //Direct to the print
-            PRINT_NOW("SITransaction_Report.aspx");
+            //PRINT_NOW("SITransaction_Report.aspx");
 
             //Prompt a message.
             lblMessageSuccess.Text = "Transaction successfully recorded.";
@@ -133,7 +134,7 @@ public partial class Transaction : System.Web.UI.Page
 
               double itemPrice = Convert.ToDouble(lblPrice.Text);
               //Instantiate table 
-              DataTable dt = (DataTable)Session["tempSupplierOrder"];
+              DataTable dt = (DataTable)Session["tempBranchOrder"];
 
               //Add New Row
               DataRow newRow = dt.NewRow();
@@ -148,10 +149,10 @@ public partial class Transaction : System.Web.UI.Page
              
               dt.Rows.Add(newRow);
 
-              Session["tempSupplierOrder"] = dt;
+              Session["tempBranchOrder"] = dt;
 
-              gvSupplierItems.DataSource = Session["tempSupplierOrder"];
-              gvSupplierItems.DataBind();
+              gvBranchItems.DataSource = Session["tempBranchOrder"];
+              gvBranchItems.DataBind();
 
               ddItemList.SelectedIndex = 0;
 
@@ -167,7 +168,7 @@ public partial class Transaction : System.Web.UI.Page
           }
       }
 
-      private void createTempItemSupplier()
+      private void createTempItemBranch()
       {
           DataTable dt = new DataTable();
 
@@ -178,15 +179,14 @@ public partial class Transaction : System.Web.UI.Page
           dt.Columns.Add("PRICE", System.Type.GetType("System.Double"));
           dt.Columns.Add("TOTAL", System.Type.GetType("System.Double"));
 
-          Session["tempSupplierOrder"] = dt;
+          Session["tempBranchOrder"] = dt;
 
       }
 
-      private void displaySupplierList()
+      private void displayBranchList()
       {
-
-          oSupplier.GET_SUPPLIER_LIST_DD(ddBranchList);
-          ddBranchList.Items.Insert(0, new ListItem("-- SELECT SUPPLIER --"));
+          oBranch.GET_BRANCH_LIST_DD(ddBranchList);
+          ddBranchList.Items.Insert(0, new ListItem("-- SELECT BRANCH --"));
       }
 
      
@@ -206,7 +206,7 @@ public partial class Transaction : System.Web.UI.Page
       {
           bool bExist = false;
 
-          foreach (GridViewRow gvr in gvSupplierItems.Rows)
+          foreach (GridViewRow gvr in gvBranchItems.Rows)
           {
               if (gvr.RowType == DataControlRowType.DataRow)
               {
@@ -228,7 +228,7 @@ public partial class Transaction : System.Web.UI.Page
       {
           double dRunningTotal = 0;
 
-          foreach (GridViewRow gvr in gvSupplierItems.Rows)
+          foreach (GridViewRow gvr in gvBranchItems.Rows)
           {
               if (gvr.RowType == DataControlRowType.DataRow)
               {
@@ -250,7 +250,7 @@ public partial class Transaction : System.Web.UI.Page
           string selCode = r.Cells[1].Text;
 
 
-          DataTable dt = (DataTable)Session["tempSupplierOrder"];
+          DataTable dt = (DataTable)Session["tempBranchOrder"];
 
           for (int i = dt.Rows.Count - 1; i >= 0; i--)
           {
@@ -261,30 +261,31 @@ public partial class Transaction : System.Web.UI.Page
 
           dt.AcceptChanges();
 
-          Session["tempSupplierOrder"] = dt;
+          Session["tempBranchOrder"] = dt;
 
 
-          gvSupplierItems.DataSource = dt;
-          gvSupplierItems.DataBind();
+          gvBranchItems.DataSource = dt;
+          gvBranchItems.DataBind();
 
           lblRunningTotal.Text = string.Format("Total Cost: {0:N}", computeRunningTotal());
       }
 
-      protected void ddSupplierList_SelectedIndexChanged(object sender, EventArgs e)
+      protected void ddBranchList_SelectedIndexChanged(object sender, EventArgs e)
       {
-        DataTable dtSupplierList = oSupplier.GET_SUPPLIER_LIST();
+          DataTable dtBranchList = oBranch.GET_BRANCH_LIST();
 
         DataRow[] dr;
-        dr = dtSupplierList.Select("SupplierCode = '" + ddBranchList.SelectedValue.ToString() + "'");
+        dr = dtBranchList.Select("BranchCode = '" + ddBranchList.SelectedValue.ToString() + "'");
 
         if (dr.Length > 0)
         {
             //Will display the selected supplier info
             foreach (DataRow row in dr)
             {
-                lblSupplierContact.Text = row["ContactPerson"].ToString();
-                lblSupplierNumbers.Text = row["Telephone"].ToString() + " " + row["MobilePhone"].ToString();
-                lblSupplierAddress.Text = row["Address"].ToString();
+                lblBranchManager.Text = row["BranchManager"].ToString();
+                lblBranchContact.Text = row["BranchContactPerson"].ToString();
+                lblBranchContactNumbers.Text = row["Telephone"].ToString() + " " + row["MobilePhone"].ToString();
+                lblBranchAddress.Text = row["Address"].ToString();
             }
         }
 
@@ -295,7 +296,8 @@ public partial class Transaction : System.Web.UI.Page
       private void resetFields()
       {
           txtDateTrans.Text = "";
-          txtDateNeeded.Text = "";
+
+          txtDateRelease.Text = "";
           txtRemarks.Text = "";
           txtQuantity.Text = "";
 
@@ -307,15 +309,17 @@ public partial class Transaction : System.Web.UI.Page
           lblPrice.Text = "";
           lblUOM.Text = "";
           lblRunningTotal.Text = "";
-          lblSupplierAddress.Text = "";
-          lblSupplierContact.Text = "";
-          lblSupplierNumbers.Text = "";
+          lblBranchAddress.Text = "";
+          lblBranchContact.Text = "";
+          lblBranchContactNumbers.Text = "";
+          lblBranchManager.Text = "";
+
           //Clearing Gridview
-          gvSupplierItems.DataSource = null;
-          gvSupplierItems.DataBind();
+          gvBranchItems.DataSource = null;
+          gvBranchItems.DataBind();
 
           //Will Clear local data table
-          DataTable dt = (DataTable)Session["tempSupplierOrder"];
+          DataTable dt = (DataTable)Session["tempBranchOrder"];
           dt.Clear();
       }
 
@@ -328,7 +332,7 @@ public partial class Transaction : System.Web.UI.Page
 
       protected void lnkPrintTransaction_Click(object sender, EventArgs e)
       {
-          Session["S_SSNUM"] = txtPrintTransaction.Text;
+          Session["S_BSNUM"] = txtPrintTransaction.Text;
           PRINT_NOW("SITransaction_Report.aspx");
 
       }
