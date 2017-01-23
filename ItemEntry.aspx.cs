@@ -13,6 +13,7 @@ public partial class ItemEntry : System.Web.UI.Page
 
     Item_C oItem = new Item_C();
     SeriesNumber_C oSeries = new SeriesNumber_C();
+    Util_C oUtil = new Util_C();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,7 +21,7 @@ public partial class ItemEntry : System.Web.UI.Page
         if (!IsPostBack)
         {
             displayItemList();
-
+            displayLocationList();
             displayUOMList();
 
         }
@@ -39,6 +40,17 @@ public partial class ItemEntry : System.Web.UI.Page
     {
         oXtra.GetItemUOM(ddUOM);
         ddUOM.SelectedIndex = 0;
+    }
+
+    private void displayLocationList()
+    {
+        DataTable dt = new DataTable();
+        dt = oUtil.GET_LOCATION_LIST();
+
+        ddLocation.DataSource = dt;
+        ddLocation.DataTextField = dt.Columns["Description"].ToString();
+        ddLocation.DataValueField = dt.Columns["LocationCode"].ToString();
+        ddLocation.DataBind();
     }
 
 

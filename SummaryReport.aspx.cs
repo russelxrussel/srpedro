@@ -47,7 +47,7 @@ public partial class SummaryReport : System.Web.UI.Page
         myRangeValue.EndValue = txtEndDate.Text;
 
 
-        oReportDocument.Load(Server.MapPath("~/Reports/Supplier_Summary_Cost_Specific.rpt"));
+        oReportDocument.Load(Server.MapPath("~/Reports/Supplier_Details_Cost_Specific.rpt"));
 
 
         oReportDocument.SetParameterValue("DateRange", myRangeValue);

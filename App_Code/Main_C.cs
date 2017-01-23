@@ -633,5 +633,14 @@ namespace SRPEDRO
 
 
     }
-    
+
+    public class Util_C : cBase
+    {
+        //Get View
+        public DataTable GET_LOCATION_LIST()
+        {
+            string strSQL = "[Util].[SP_GET_LOCATION_LIST]";
+            return queryCommandDT_StoredProc(strSQL);
+        }
+    }
 }

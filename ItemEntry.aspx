@@ -111,7 +111,7 @@
                     
                     <div class="row">
                        <!-- Item Description -->
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                           
                              
                                         <div class="input-group input-group-sm">
@@ -123,7 +123,24 @@
                             
                         </div>
 
-                         <!-- UOM-->
+                        
+
+                             <!-- LOCATION -->
+                    <div class="col-md-5">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">LOC</span>
+                        <asp:DropDownList runat="server" ID="ddLocation" CssClass="dropdown form-control"></asp:DropDownList>
+                        </div>
+                    </div>
+                        </div>
+                    
+               
+                    </li>
+
+                    <li class="list-group-item">
+                    <div class="row">
+                    
+                     <!-- UOM-->
                         <div class="col-md-4">
                            
                             <div class="input-group input-group-sm">
@@ -132,16 +149,10 @@
                                 <asp:DropDownList ID="ddUOM" runat="server" CssClass="dropdown form-control">
                                 </asp:DropDownList>
                             </div>
-                        </div>
-                    </div>
-               
-                    </li>
-
-                    <li class="list-group-item">
-                    <div class="row">
-                    
+                            </div>
+                   
                      <!-- ITEM PRICE -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="input-group input-group-sm">
                     <span class="input-group-addon">PRICE:</span>
                     <asp:TextBox runat="server" CssClass="form-control" ID="txtItemPrice" placeholder="Price"></asp:TextBox>
@@ -149,17 +160,20 @@
                     </div>
 
                      <!-- STOCK LIMIT -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">LIMIT:</span>
                             <asp:TextBox runat="server" CssClass="form-control" ID="txtStockLimit" placeholder="Stock Limit"></asp:TextBox>
                         </div>
                     </div>
 
+                   
+
+
                     <!--Status-->
-                     <div class="col-md-4">
+                     <div class="col-md-2">
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-addon">STATUS:</span>
+                                    <span class="input-group-addon"></span>
                                     <asp:CheckBox runat="server" ID="chkItemStatus" CssClass="form-control" />
                                 </div>
                             </div>
@@ -169,7 +183,7 @@
                     </li>
 
                     <li class="list-group-item">
-                                <asp:TextBox runat="server" ID="txtItemRemarks" TextMode="MultiLine" Rows="2" placeholder="Item Remarks"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtItemRemarks" TextMode="MultiLine" Rows="2" placeholder="Item Remarks" CssClass="form-control"></asp:TextBox>
 
                     </li>
 
