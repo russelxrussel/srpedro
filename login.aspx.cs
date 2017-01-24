@@ -36,6 +36,8 @@ public partial class login : System.Web.UI.Page
   
         if(oXtra.checkUser(txtUserId.Text, txtPassword.Text))
         {
+            oGlobal.G_USERCODE = txtUserId.Text;
+
             Response.Redirect("home.aspx");
         }
         else

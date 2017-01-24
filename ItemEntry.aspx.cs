@@ -48,7 +48,7 @@ public partial class ItemEntry : System.Web.UI.Page
         dt = oUtil.GET_LOCATION_LIST();
 
         ddLocation.DataSource = dt;
-        ddLocation.DataTextField = dt.Columns["Description"].ToString();
+        ddLocation.DataTextField = dt.Columns["LocationDesc"].ToString();
         ddLocation.DataValueField = dt.Columns["LocationCode"].ToString();
         ddLocation.DataBind();
     }

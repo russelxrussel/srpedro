@@ -40,8 +40,45 @@ padding-top: 60px;
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
     
-
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+ <div class="container">
+
+     <div class="navbar-header">
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="">
+     <span class="sr-only">Toggle Nav</span>
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+     </button>
+     <div><a class="navbar-brand" href="home.aspx"><span class="glyphicon glyphicon-home"></span></a></div>
+     </div>
+
+
+     <div class="collapse navbar-collapse">
+           
+          <div id="myDiv" runat="server">
+          <!-- Location of dynamic menu located here -->
+
+          </div>
+
+         <ul class="nav navbar-nav navbar-right">
+             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                 aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user">
+                 </span> <asp:Label runat="server" ID="lblUser"></asp:Label> <span class="caret"></span></a>
+                 <ul class="dropdown-menu">
+                     <li><a href="login.aspx"><span class="glyphicon glyphicon-off">
+                 </span> Log-out </a></li>
+                  
+                 </ul>
+             </li>
+         </ul>
+     </div>
+
+ </div>
+ 
+ </div> 
+
+   <%-- <div class="navbar navbar-default navbar-fixed-top" role="navigation">
  <div class="container">
 
      <div class="navbar-header">
@@ -79,7 +116,7 @@ padding-top: 60px;
 
  </div>
  
- </div> 
+ </div> --%>
 
     <div>
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">

@@ -82,6 +82,32 @@ namespace SRPEDRO
         }
 
 
+        /*USER MENU 
+         * 01/24/2017
+         * RUSSEL VASQUEZ
+         */
+
+        public DataSet GET_USER_MENU()
+        {
+            DataSet ds = new DataSet();
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("[xSys].[SP_GET_USER_MENU]", cn))
+                //using (SqlCommand cmd = new SqlCommand("Select * from xSystem.Menus", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    //cmd.Parameters.AddWithValue("@UserCode", _UserCode);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(ds);
+                }
+            }
+
+            return ds;
+        }
+
+
+
         //Getting Supplier List
         public DataTable GetSupplierList()
         {
@@ -395,6 +421,8 @@ namespace SRPEDRO
 
         }
     }
+
+
 
 
     public class Branch_C : cBase 

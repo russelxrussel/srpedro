@@ -7,7 +7,7 @@
 <div class="container container_content">
 
 
-<img src="images/sp.png" class="img-responsive img-thumbnail" />
+<%--<img src="images/sp.png" class="img-responsive img-thumbnail" />--%>
 <hr />
 <h2>HOME PAGE</h2>
 
