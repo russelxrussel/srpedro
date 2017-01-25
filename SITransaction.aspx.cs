@@ -69,7 +69,7 @@ public partial class Transaction : System.Web.UI.Page
             foreach (GridViewRow row in gvSupplierItems.Rows)
             {
                 string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST");
-                Session["S_SSNUM"] = SeriesNum;
+                oGlobal.G_SSNUM = SeriesNum;
 
                 string sItemCode = row.Cells[1].Text;
                 double dQty = double.Parse(row.Cells[3].Text);
@@ -328,7 +328,7 @@ public partial class Transaction : System.Web.UI.Page
 
       protected void lnkPrintTransaction_Click(object sender, EventArgs e)
       {
-          Session["S_SSNUM"] = txtPrintTransaction.Text;
+          oGlobal.G_SSNUM = txtPrintTransaction.Text;
           PRINT_NOW("SITransaction_Report.aspx");
 
       }

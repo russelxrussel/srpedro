@@ -10,6 +10,10 @@ public static class oGlobal
 {
     static string _gusercode;
 
+    static string _gBsNum;
+    static string _gSsNum;
+
+
     public static string G_USERCODE
     {
         get {
@@ -19,5 +23,29 @@ public static class oGlobal
             _gusercode = value;
         }
     
+    }
+
+    public static string G_BSNUM
+    {
+        get
+        {
+            return _gBsNum;
+        }
+        set
+        {
+            _gBsNum = value;
+        }
+    }
+
+    public static string G_SSNUM
+    {
+        get
+        {
+            return _gSsNum;
+        }
+        set
+        {
+            _gSsNum = value;
+        }
     }
 }

@@ -13,9 +13,10 @@ public partial class SITransaction_Report : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-            oReportDocument.Load(Server.MapPath("~/Reports/Supplier_Stock_Trans.rpt"));
+        oReportDocument.Load(Server.MapPath("~/Reports/Branch_Item_Trans.rpt"));
 
-            oReportDocument.SetParameterValue("SSNUM", oGlobal.G_SSNUM); // Set Parameter
+
+        oReportDocument.SetParameterValue("BSNUM", oGlobal.G_BSNUM); // Set Parameter
             oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); // Supply user credentials
             CrystalReportViewer1.ReportSource = oReportDocument;
     }

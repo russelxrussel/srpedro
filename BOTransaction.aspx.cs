@@ -70,7 +70,7 @@ public partial class Transaction : System.Web.UI.Page
             foreach (GridViewRow row in gvBranchItems.Rows)
             {
                 string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT");
-                Session["S_BSNUM"] = SeriesNum;
+                oGlobal.G_BSNUM = SeriesNum;
 
                 string sItemCode = row.Cells[1].Text;
                 double dQty = double.Parse(row.Cells[3].Text);
@@ -90,7 +90,7 @@ public partial class Transaction : System.Web.UI.Page
 
 
             //Direct to the print
-            //PRINT_NOW("SITransaction_Report.aspx");
+            PRINT_NOW("BOTransaction_Report.aspx");
 
             //Prompt a message.
             lblMessageSuccess.Text = "Transaction successfully recorded.";
@@ -332,8 +332,8 @@ public partial class Transaction : System.Web.UI.Page
 
       protected void lnkPrintTransaction_Click(object sender, EventArgs e)
       {
-          Session["S_BSNUM"] = txtPrintTransaction.Text;
-          PRINT_NOW("SITransaction_Report.aspx");
+          oGlobal.G_BSNUM = txtPrintTransaction.Text;
+          PRINT_NOW("BOTransaction_Report.aspx");
 
       }
 }

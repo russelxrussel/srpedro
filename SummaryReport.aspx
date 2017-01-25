@@ -78,15 +78,17 @@ padding-top: 10px;
         
         </div><!-- End of Left Column -->
    
-
+   </div>
+   <div class="row">
     <div class="col-md-9"><!-- Right Column -->
      <div class="row">
 
       <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" 
-            AutoDataBind="true"
-            EnableParameterPrompt="False" 
-            ToolPanelView="ParameterPanel" EnableDatabaseLogonPrompt="False" 
-             ReuseParameterValuesOnRefresh="True" />
+            AutoDataBind="true" 
+            HasCrystalLogo="False" ToolPanelView="None" 
+            ToolPanelWidth="200px" Width="1024px" EnableDatabaseLogonPrompt="False" 
+            EnableParameterPrompt="False" HasToggleGroupTreeButton="False" 
+            HasToggleParameterPanelButton="False" ReuseParameterValuesOnRefresh="True" GroupTreeStyle-ShowLines="False" />
    
     </div><!-- End of Right Column -->
    
@@ -96,6 +98,7 @@ padding-top: 10px;
 
     </div><!--End of Container -->
 
+    </div>
     </form>
 </body>
 </html>

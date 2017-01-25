@@ -18,8 +18,10 @@ public partial class SummaryReport : System.Web.UI.Page
             txtStartDate.Text = DateTime.Now.ToShortDateString();
             txtEndDate.Text = DateTime.Now.ToShortDateString();
 
-            displayReport();
+          
         }
+
+        displayReport();
     }
 
     protected void Page_UnLoad(object sender, EventArgs e)
@@ -42,18 +44,27 @@ public partial class SummaryReport : System.Web.UI.Page
 
     private void displayReport()
     {
+        DateTime dtStartDate = Convert.ToDateTime(txtStartDate.Text);
+        DateTime dtEndDate = Convert.ToDateTime(txtEndDate.Text);
+
         ParameterRangeValue myRangeValue = new ParameterRangeValue();
-        myRangeValue.StartValue = txtStartDate.Text; //txtDateStart.Text;
-        myRangeValue.EndValue = txtEndDate.Text;
+        myRangeValue.StartValue = dtStartDate; //txtDateStart.Text;
+        myRangeValue.EndValue = dtEndDate;
 
 
         oReportDocument.Load(Server.MapPath("~/Reports/Supplier_Details_Cost_Specific.rpt"));
 
+        try
+        {
+            oReportDocument.SetParameterValue("DateRange", myRangeValue);
+            oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); // Supply user credentials
 
-        oReportDocument.SetParameterValue("DateRange", myRangeValue);
-        oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); // Supply user credentials
+            CrystalReportViewer1.ReportSource = oReportDocument;
+        }
+        catch
+        { 
         
-        CrystalReportViewer1.ReportSource = oReportDocument;
+        }
 
     }
 
