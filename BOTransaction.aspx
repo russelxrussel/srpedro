@@ -213,9 +213,9 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="input-group input-group-sm">
-                                                            <span class="input-group-addon alert-warning">UOM</span><asp:Label runat="server"
+                                                            <span class="input-group-addon alert-info">UOM</span><asp:Label runat="server"
                                                                 ID="lblUOM" CssClass="form-control"></asp:Label>
-                                                            <span class="input-group-addon alert-warning">PRICE</span><asp:Label runat="server"
+                                                            <span class="input-group-addon alert-info">PRICE</span><asp:Label runat="server"
                                                                 ID="lblPrice" CssClass="form-control text-danger"></asp:Label>
                                                         </div>
                                                     </div>

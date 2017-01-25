@@ -37,7 +37,7 @@
     
 
  <asp:LinkButton runat="server" ID="lnkCreateBranch" 
-        CssClass="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> CREATE</asp:LinkButton>
+        CssClass="btn btn-primary btn-sm" OnClick="lnkCreateBranch_Click"><span class="glyphicon glyphicon-plus-sign"></span> CREATE</asp:LinkButton>
 </div>
 
 <%-- <div class="col-md-3 col-md-offset-6">
@@ -57,7 +57,7 @@
     <div class="panel-body">
 
     <!-- Display Gridview List of Items -->
-    <asp:GridView runat="server" ID="gvItemList" 
+    <asp:GridView runat="server" ID="gvBranchList" 
             CssClass="table table-responsive table-hover table-condensed table-bordered" AutoGenerateColumns="False">
     
         <Columns>
@@ -67,22 +67,12 @@
             </ItemTemplate>
                 <ItemStyle HorizontalAlign="Center" />
             </asp:TemplateField>
-            <asp:BoundField DataField="ItemCode" HeaderText="Code" />
-            <asp:BoundField DataField="ItemName" HeaderText="Item Name / Description" />
-            <asp:BoundField DataField="UOMCode" HeaderText="UOM" />
-            <asp:BoundField DataField="ItemPrice" HeaderText="Price" />
-            <asp:CheckBoxField DataField="ItemStatus" HeaderText="Status" >
+            <asp:BoundField DataField="BranchCode" HeaderText="Code" />
+            <asp:BoundField DataField="BranchName" HeaderText="Branch Name" />
+            <asp:BoundField DataField="BranchManager" HeaderText="Manager" />
+            <asp:BoundField DataField="Address" HeaderText="Address" />
              
-             <HeaderStyle HorizontalAlign="Center" />
-            <ItemStyle HorizontalAlign="Center" />
-            </asp:CheckBoxField>
-             
-             <%--<asp:TemplateField>
-            <ItemTemplate>
-            <asp:LinkButton ID="lnkItemTransaction" runat="server" CssClass="btn btn-warning btn-sm">View Transaction</asp:LinkButton>
-            </ItemTemplate>
-                 <ItemStyle HorizontalAlign="Center" />
-            </asp:TemplateField>--%>
+                         
            
         </Columns>
     
@@ -108,82 +98,62 @@
                     <ul class="list-group">
                     
                     <li class="list-group-item">
-                    
-                    <div class="row">
-                       <!-- Branch Description -->
-                        <div class="col-md-6">
-                          
-                             
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">NAME: </span>
-                                            <asp:TextBox runat="server" CssClass="form-control text-uppercase" ID="txtItemDescription"
-                                                placeholder="Name / Description"></asp:TextBox>
-                                        </div>
-                                
-                            
-                        </div>
-
-                        
-
-                             <!-- LOCATION -->
-                    <div class="col-md-6">
                         <div class="input-group input-group-sm">
-                            <span class="input-group-addon">CITY</span>
-                        <asp:DropDownList runat="server" ID="ddLocation" CssClass="dropdown form-control"></asp:DropDownList>
+                            <span class="input-group-addon">NAME: </span>
+                            <asp:TextBox runat="server" CssClass="form-control text-uppercase" ID="txtBranchName"
+                                placeholder="Name / Description"></asp:TextBox>
                         </div>
-                    </div>
-                        </div>
-                    
-               
                     </li>
 
                     <li class="list-group-item">
-                    <div class="row">
-                    
-                     <!-- Manager-->
-                        <div class="col-md-4">
-                           
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon">MANAGER</span>
-                                </span>
-                                <asp:DropDownList ID="ddUOM" runat="server" CssClass="dropdown form-control">
-                                </asp:DropDownList>
-                            </div>
-                            </div>
-                   
-                     <!-- ITEM PRICE -->
-                    <div class="col-md-3">
-                      <div class="input-group input-group-sm">
-                    <span class="input-group-addon">PRICE:</span>
-                    <asp:TextBox runat="server" CssClass="form-control" ID="txtItemPrice" placeholder="Price"></asp:TextBox>
-                </div>
-                    </div>
-
-                     <!-- STOCK LIMIT -->
-                    <div class="col-md-3">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon">LIMIT:</span>
-                            <asp:TextBox runat="server" CssClass="form-control" ID="txtStockLimit" placeholder="Stock Limit"></asp:TextBox>
-                        </div>
-                    </div>
-
-                   
-
-
-                    <!--Status-->
-                     <div class="col-md-2">
+                        <div class="row">
+                            <!-- Manager-->
+                            <div class="col-md-6">
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-addon"></span>
-                                    <asp:CheckBox runat="server" ID="chkItemStatus" CssClass="form-control" />
+                                    <span class="input-group-addon">MANAGER</span> </span>
+                                    <asp:TextBox runat="server" ID="txtBranchManager" CssClass="form-control"></asp:TextBox>
                                 </div>
                             </div>
-                    
-                    
-                    </div>
+                            <!-- LOCATION -->
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon">AREA</span>
+                                    <asp:DropDownList runat="server" ID="ddBranchArea" CssClass="dropdown form-control">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                      </div>
+   
+                   </li>
+
+                   <li class="list-group-item">
+                       <div class="row">
+                           <!-- CONTACT PERSON -->
+                           <div class="col-md-4">
+                               <div class="input-group input-group-sm">
+                                   <span class="input-group-addon"></span>
+                                   <asp:TextBox runat="server" CssClass="form-control" ID="txtContactPerson" placeholder="Contact Person"></asp:TextBox>
+                               </div>
+                           </div>
+                           <!-- TELEPHONE -->
+                           <div class="col-md-4">
+                               <div class="input-group input-group-sm">
+                                   <span class="input-group-addon"></span>
+                                   <asp:TextBox runat="server" CssClass="form-control" ID="txtTelephone" placeholder="Land line Number"></asp:TextBox>
+                               </div>
+                           </div>
+                           <!-- MOBILE -->
+                           <div class="col-md-4">
+                               <div class="input-group input-group-sm">
+                                   <span class="input-group-addon"></span>
+                                   <asp:TextBox runat="server" CssClass="form-control" ID="txtMobile" placeholder="Mobile Number"></asp:TextBox>
+                               </div>
+                           </div>
+                       </div>
                     </li>
 
                     <li class="list-group-item">
-                                <asp:TextBox runat="server" ID="txtItemRemarks" TextMode="MultiLine" Rows="2" placeholder="Item Remarks" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtBranchAddress" TextMode="MultiLine" Rows="2" placeholder="Branch Address" CssClass="form-control"></asp:TextBox>
 
                     </li>
 
