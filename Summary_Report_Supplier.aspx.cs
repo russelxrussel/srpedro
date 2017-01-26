@@ -8,7 +8,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using SRPEDRO;
 
-public partial class SummaryReport : System.Web.UI.Page
+public partial class Summary_Report_Supplier : System.Web.UI.Page
 {
     ReportDocument oReportDocument = new ReportDocument();
     Supplier_C oSupplier = new Supplier_C();
@@ -20,7 +20,7 @@ public partial class SummaryReport : System.Web.UI.Page
             txtStartDate.Text = DateTime.Now.ToShortDateString();
             txtEndDate.Text = DateTime.Now.ToShortDateString();
             displaySupplierList();
-          
+
         }
 
         displayReport();
@@ -59,10 +59,10 @@ public partial class SummaryReport : System.Web.UI.Page
         myRangeValue.EndValue = dtEndDate;
 
 
-       
+
         if (ddSupplierList.SelectedIndex == 0)
         {
-        //This will display all transaction base on date range
+            //This will display all transaction base on date range
             oReportDocument.Load(Server.MapPath("~/Reports/Supplier_All_Summary.rpt"));
 
             oReportDocument.SetParameterValue("DateRange", myRangeValue);
@@ -91,5 +91,5 @@ public partial class SummaryReport : System.Web.UI.Page
 
     }
 
-   
+
 }

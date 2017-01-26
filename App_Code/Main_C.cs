@@ -482,6 +482,35 @@ namespace SRPEDRO
             }
         }
 
+
+        public void UPDATE_BRANCH_INFO(string _branchCode, string _branchName, string _manager, string _areaCode,
+                                  string _contactPerson, string _telephone, string _mobilephone,
+                                  string _address, string _userCode)
+        {
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("[Master].[SP_UPDATE_BRANCH_INFO]", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@BRANCHCODE", _branchCode);
+                    cmd.Parameters.AddWithValue("@BRANCHNAME", _branchName);
+                    cmd.Parameters.AddWithValue("@MANAGER", _manager);
+                    cmd.Parameters.AddWithValue("@AREACODE", _areaCode);
+                    cmd.Parameters.AddWithValue("@CONTACTPERSON", _contactPerson);
+                    cmd.Parameters.AddWithValue("@TELEPHONE", _telephone);
+                    cmd.Parameters.AddWithValue("@MOBILEPHONE", _mobilephone);
+                    cmd.Parameters.AddWithValue("@ADDRESS", _address);
+                    cmd.Parameters.AddWithValue("@USERCODE", _userCode);
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+
         public void INSERT_BRANCH_TRANS_HDR(string _branchCode, DateTime _documentDate, DateTime _releaseDate, string _bsnum, string _remarks, string _userCode)
         {
             using (SqlConnection cn = new SqlConnection(CS))
@@ -531,6 +560,8 @@ namespace SRPEDRO
             }
         }
 
+
+     
     }
 
     public class Supplier_C : cBase

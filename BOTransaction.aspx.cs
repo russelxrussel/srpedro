@@ -7,12 +7,10 @@ using System.Web.UI.WebControls;
 using System.Data;
 using SRPEDRO;
 
-public partial class Transaction : System.Web.UI.Page
+public partial class BOTransaction : System.Web.UI.Page
 {
     
-    Main_C oMain = new Main_C();
     SeriesNumber_C oSeriesNumber = new SeriesNumber_C();
-    Supplier_C oSupplier = new Supplier_C();
     Branch_C oBranch = new Branch_C();
     Item_C oItem = new Item_C();
 
@@ -60,8 +58,7 @@ public partial class Transaction : System.Web.UI.Page
 
         //Saving Data on Supplier Transaction HDR
 
-      //  oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateNeeded.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, "RUssel");
-        oBranch.INSERT_BRANCH_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateRelease.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT"), txtRemarks.Text, "RUssel");
+        oBranch.INSERT_BRANCH_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateRelease.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT"), txtRemarks.Text, oGlobal.G_USERCODE);
         
         if (gvBranchItems.Rows.Count > 0)
         {
@@ -77,8 +74,7 @@ public partial class Transaction : System.Web.UI.Page
                 string sUOM = row.Cells[4].Text;
                 double dPrice = double.Parse(row.Cells[5].Text);
 
-               // oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
-                oBranch.INSERT_BRANCH_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
+                oBranch.INSERT_BRANCH_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, oGlobal.G_USERCODE);
                 
               
             }

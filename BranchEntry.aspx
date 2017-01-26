@@ -111,7 +111,7 @@
                             <div class="col-md-6">
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-addon">MANAGER</span> </span>
-                                    <asp:TextBox runat="server" ID="txtBranchManager" CssClass="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtBranchManager" CssClass="form-control  text-uppercase"></asp:TextBox>
                                 </div>
                             </div>
                             <!-- LOCATION -->
@@ -132,7 +132,7 @@
                            <div class="col-md-4">
                                <div class="input-group input-group-sm">
                                    <span class="input-group-addon"></span>
-                                   <asp:TextBox runat="server" CssClass="form-control" ID="txtContactPerson" placeholder="Contact Person"></asp:TextBox>
+                                   <asp:TextBox runat="server" CssClass="form-control  text-uppercase" ID="txtContactPerson" placeholder="Contact Person"></asp:TextBox>
                                </div>
                            </div>
                            <!-- TELEPHONE -->

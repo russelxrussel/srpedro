@@ -1,11 +1,11 @@
-﻿-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SummaryReport.aspx.cs" Inherits="SummaryReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Summary_Report_Supplier.aspx.cs" Inherits="Summary_Report_Supplier" %>
 
 <%@ Register assembly="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" namespace="CrystalDecisions.Web" tagprefix="CR" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
   <title>Sr Pedro Warehouse Management - Summary Report</title>
 
     <!--CSS Style Here -->

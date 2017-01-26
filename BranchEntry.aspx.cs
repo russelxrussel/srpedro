@@ -86,21 +86,24 @@ public partial class ItemEntry : System.Web.UI.Page
         // string selAppNum = r.Cells[2].Text;
         string selCode = r.Cells[1].Text;
 
-        DataTable dt = oItem.GET_ITEM_LIST();
+        DataTable dt = oBranch.GET_BRANCH_LIST();
 
         DataRow[] dr;
-        dr = dt.Select("ItemCode = '" + selCode + "'");
+        dr = dt.Select("BranchCode = '" + selCode + "'");
 
         if (dr.Length > 0)
         {
             //Will display the selected item info
             foreach (DataRow row in dr)
             {
-                txtBranchName.Text = row["ItemName"].ToString();
-               
-                //txtItemPrice.Text = row["ItemPrice"].ToString();
-                //txtStockLimit.Text = row["MinimumStockLevel"].ToString();
-        
+                txtBranchName.Text = row["BranchName"].ToString();
+                ddBranchArea.SelectedValue = row["AreaCode"].ToString();
+                txtBranchManager.Text = row["BranchManager"].ToString();
+                txtContactPerson.Text = row["BranchContactPerson"].ToString();
+                txtTelephone.Text = row["Telephone"].ToString();
+                txtMobile.Text = row["MobilePhone"].ToString();
+                txtBranchAddress.Text = row["Address"].ToString();
+                
             }
         }
 
@@ -112,10 +115,10 @@ public partial class ItemEntry : System.Web.UI.Page
         //Disable UOM
         //ddUOM.Enabled = false;
 
-        lblActionTitle.Text = "Modify Item - " + selCode;
+        lblActionTitle.Text = "Modify Branch - " + selCode;
         
         //Will use as reference to update item.
-        ViewState["SEL_ITEMCODE"] = selCode;
+        ViewState["SEL_BRANCHCODE"] = selCode;
 
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#BranchContainer').modal('show');</script>", false);
       
@@ -135,15 +138,16 @@ public partial class ItemEntry : System.Web.UI.Page
             //Add New Item
             if (ViewState["ACTION"].ToString() == "ADD")
             {
+              
+
                 oBranch.INSERT_BRANCH_INFO(oSeries.GENERATE_SERIES_NUMBER_MASTER("BRM"), txtBranchName.Text.ToUpper(), txtBranchManager.Text.ToUpper(), ddBranchArea.SelectedValue.ToString(), txtContactPerson.Text.ToUpper(),
                                            txtTelephone.Text, txtMobile.Text, txtBranchAddress.Text, oGlobal.G_USERCODE, "BRM");
             }
-            //else if (ViewState["ACTION"].ToString() == "MODIFY")
-            //{
-            //    oItem.UPDATE_ITEM_INVENTORY_DATA(ViewState["SEL_ITEMCODE"].ToString(), txtItemDescription.Text.ToUpper(), Convert.ToDouble(txtItemPrice.Text),
-            //                                       chkItemStatus.Checked, txtItemRemarks.Text, Convert.ToDouble(txtStockLimit.Text), "AdminTest");
-
-            //}
+            else if (ViewState["ACTION"].ToString() == "MODIFY")
+            {
+                oBranch.UPDATE_BRANCH_INFO(ViewState["SEL_BRANCHCODE"].ToString(), txtBranchName.Text.ToUpper(), txtBranchManager.Text.ToUpper(), ddBranchArea.SelectedValue.ToString(), txtContactPerson.Text.ToUpper(),
+                                           txtTelephone.Text, txtMobile.Text, txtBranchAddress.Text, oGlobal.G_USERCODE);
+            }
 
             //Refresh the current web page  
             Response.Redirect(Request.RawUrl);
