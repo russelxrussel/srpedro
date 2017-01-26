@@ -47,13 +47,13 @@ padding-top: 10px;
         <div class="col-md-3">
          <div class="input-group input-group-sm">
                     <span class="input-group-addon alert-danger">BRANCH</span>
-                    <asp:DropDownList runat="server" ID="ddSupplierList" CssClass="form-control"></asp:DropDownList>
+                    <asp:DropDownList runat="server" ID="ddBranchList" CssClass="form-control"></asp:DropDownList>
                 </div>
         </div>
         <div class="col-md-3">
                 <!-- Start Date-->
                 <div class="input-group input-group-sm">
-                    <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-calendar">
+                    <span class="input-group-addon alert-danger">FROM <span class="glyphicon glyphicon-calendar">
                     </span></span>
                     <asp:TextBox runat="server" ID="txtStartDate" CssClass="calendarInput form-control"
                         placeholder="Start Date"></asp:TextBox>
@@ -62,7 +62,7 @@ padding-top: 10px;
         <div class="col-md-3">
                 <!-- End Date-->
                 <div class="input-group input-group-sm">
-                    <span class="input-group-addon alert-danger"><span class="glyphicon glyphicon-calendar">
+                    <span class="input-group-addon alert-danger">TO <span class="glyphicon glyphicon-calendar">
                     </span></span>
                     <asp:TextBox runat="server" ID="txtEndDate" CssClass="calendarInput form-control"
                         placeholder="End Date"></asp:TextBox>

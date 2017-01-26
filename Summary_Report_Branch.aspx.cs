@@ -11,7 +11,7 @@ using SRPEDRO;
 public partial class Summary_Report_Branch : System.Web.UI.Page
 {
     ReportDocument oReportDocument = new ReportDocument();
-    Supplier_C oSupplier = new Supplier_C();
+    Branch_C oBranch = new Branch_C();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -19,7 +19,7 @@ public partial class Summary_Report_Branch : System.Web.UI.Page
         {
             txtStartDate.Text = DateTime.Now.ToShortDateString();
             txtEndDate.Text = DateTime.Now.ToShortDateString();
-            displaySupplierList();
+            displayBranchList();
 
         }
 
@@ -34,10 +34,10 @@ public partial class Summary_Report_Branch : System.Web.UI.Page
 
     }
 
-    private void displaySupplierList()
+    private void displayBranchList()
     {
-        oSupplier.GET_SUPPLIER_LIST_DD(ddSupplierList);
-        ddSupplierList.Items.Insert(0, new ListItem("-- ALL --"));
+        oBranch.GET_BRANCH_LIST_DD(ddBranchList);
+        ddBranchList.Items.Insert(0, new ListItem("-- ALL --"));
     }
 
     protected void U_Print_Click(object sender, EventArgs e)
@@ -55,28 +55,28 @@ public partial class Summary_Report_Branch : System.Web.UI.Page
         DateTime dtEndDate = Convert.ToDateTime(txtEndDate.Text);
 
         ParameterRangeValue myRangeValue = new ParameterRangeValue();
-        myRangeValue.StartValue = dtStartDate; //txtDateStart.Text;
+        myRangeValue.StartValue = dtStartDate; 
         myRangeValue.EndValue = dtEndDate;
 
 
 
-        if (ddSupplierList.SelectedIndex == 0)
+        if (ddBranchList.SelectedIndex == 0)
         {
             //This will display all transaction base on date range
-            oReportDocument.Load(Server.MapPath("~/Reports/Supplier_All_Summary.rpt"));
+            oReportDocument.Load(Server.MapPath("~/Reports/Branch_All_Summary.rpt"));
 
             oReportDocument.SetParameterValue("DateRange", myRangeValue);
-            oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); // Supply user credentials
+            oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); 
 
             CrystalReportViewer1.ReportSource = oReportDocument;
         }
         else
         {
-            //This will display specific supplier transaction only
-            oReportDocument.Load(Server.MapPath("~/Reports/Supplier_Details_Summary.rpt"));
+            //This will display specific branch transaction only
+            oReportDocument.Load(Server.MapPath("~/Reports/Branch_Details_Summary.rpt"));
             try
             {
-                oReportDocument.SetParameterValue("SSNum", ddSupplierList.SelectedValue.ToString());
+                oReportDocument.SetParameterValue("BSNum", ddBranchList.SelectedValue.ToString());
                 oReportDocument.SetParameterValue("DateRange", myRangeValue);
                 oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); // Supply user credentials
 
