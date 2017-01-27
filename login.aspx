@@ -13,18 +13,18 @@
   body
     {
         
- margin-top: 20px;
+ margin-top: 60px;
 
     }
     
     .pnlTop
     {
-    margin-top: 15px;    
+    margin-top: 25px;    
     }
     
     </style>
 
-    <title>Sr Pedro Warehouse Management System</title>
+    <title>Sr Pedro Inventory Management System</title>
 
 </head>
 <body>
@@ -39,7 +39,7 @@
            
          <div class="panel-heading">
                           <h2 class="panel-title">
-                                    <strong>Sr Pedro Warehouse Management System</strong></h2>
+                                    <strong>Sr Pedro Inventory Management System</strong></h2>
                               
             </div>
 

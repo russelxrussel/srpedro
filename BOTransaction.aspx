@@ -282,7 +282,7 @@
                                     <button class="close" data-dismiss="modal">
                                         &times;</button>
                                     <h4 class="modal-title">
-                                        Sr Pedro Warehouse System</h4>
+                                        Sr Pedro Inventory System Management</h4>
                                 </div>
                                 <div class="modal-body">
                                     <h4>
@@ -302,7 +302,7 @@
                                     <button class="close" data-dismiss="modal">
                                         &times;</button>
                                     <h4 class="modal-title">
-                                        Sr Pedro Warehouse System</h4>
+                                        Sr Pedro Inventory System Management</h4>
                                 </div>
                                 <div class="modal-body">
                                     <h4>

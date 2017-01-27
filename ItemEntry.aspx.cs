@@ -144,13 +144,13 @@ public partial class ItemEntry : System.Web.UI.Page
             if (ViewState["ACTION"].ToString() == "ADD")
             {
                 oItem.INSERT_ITEM_INVENTORY_DATA(oSeries.GENERATE_SERIES_NUMBER_MASTER("ITM"), txtItemDescription.Text.ToUpper(), ddUOM.SelectedValue.ToString(), Convert.ToDouble(txtItemPrice.Text),
-                                                chkItemStatus.Checked, txtItemRemarks.Text, Convert.ToDouble(txtStockLimit.Text), oGlobal.G_USERCODE, "ITM");
+                                                chkItemStatus.Checked, txtItemRemarks.Text, ddLocation.SelectedValue.ToString(), Convert.ToDouble(txtStockLimit.Text), oGlobal.G_USERCODE, "ITM");
 
             }
             else if (ViewState["ACTION"].ToString() == "MODIFY")
             {
                 oItem.UPDATE_ITEM_INVENTORY_DATA(ViewState["SEL_ITEMCODE"].ToString(), txtItemDescription.Text.ToUpper(), Convert.ToDouble(txtItemPrice.Text),
-                                                   chkItemStatus.Checked, txtItemRemarks.Text, Convert.ToDouble(txtStockLimit.Text), oGlobal.G_USERCODE);
+                                                   chkItemStatus.Checked, txtItemRemarks.Text, ddLocation.SelectedValue.ToString(), Convert.ToDouble(txtStockLimit.Text), oGlobal.G_USERCODE);
 
             }
 

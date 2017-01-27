@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Sr Pedro Warehouse Management</title>
+    <title>Sr Pedro Inventory Management System</title>
 
     <!--CSS Style Here -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />

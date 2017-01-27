@@ -59,7 +59,7 @@ public partial class Transaction : System.Web.UI.Page
 
         //Saving Data on Supplier Transaction HDR
 
-        oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDeliveryDate.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, "RUssel");
+        oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDeliveryDate.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, oGlobal.G_USERCODE);
 
 
         if (gvSupplierItems.Rows.Count > 0)
@@ -76,7 +76,7 @@ public partial class Transaction : System.Web.UI.Page
                 string sUOM = row.Cells[4].Text;
                 double dPrice = double.Parse(row.Cells[5].Text);
 
-                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), SeriesNum , sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
+                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), SeriesNum , sItemCode, dQty, dPrice, sUOM, oGlobal.G_USERCODE);
                 
                 //Update Stock Inventory
                 //oSupplier.UPDATE_STOCK_INVENTORY(sItemCode, dQty);
