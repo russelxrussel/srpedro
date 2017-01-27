@@ -44,6 +44,11 @@ padding-top: 10px;
     
     <div class="row"><!--Main Row -->
         
+         <div class="col-md-1">
+                <asp:LinkButton runat="server" ID="lnkHome" CssClass="btn btn-primary btn-sm" 
+                    onclick="lnkHome_Click"><span class="glyphicon glyphicon-arrow-left"></span> HOME</asp:LinkButton>
+        </div>   
+
         <div class="col-md-3">
          <div class="input-group input-group-sm">
                     <span class="input-group-addon alert-danger">BRANCH</span>
@@ -70,8 +75,8 @@ padding-top: 10px;
        </div>
         
                 
-        <div class="col-md-3">
-                <asp:LinkButton runat="server" ID="U_Print" CssClass="btn btn-success btn-sm" 
+        <div class="col-md-2">
+                <asp:LinkButton runat="server" ID="U_Print" CssClass="btn btn-primary btn-sm" 
                         onclick="U_Print_Click"><span class="glyphicon glyphicon-print"></span> PREVIEW</asp:LinkButton>
         </div>        
                 

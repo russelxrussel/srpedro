@@ -49,7 +49,7 @@
         <div class="row">
                     
                     <div class="col-md-5">
-                  <%--  <img src="images/sp.png" class="img-rounded img-responsive" /> --%>
+                    <img src="images/Sr_pedro_diagram.png" class="img-responsive img-rounded" /> 
                     </div>
            
         

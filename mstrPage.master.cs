@@ -17,23 +17,35 @@ public partial class mstrPage : System.Web.UI.MasterPage
     {
         if (!this.IsPostBack)
         {
+            if (!string.IsNullOrEmpty(oGlobal.G_USERCODE))
+            {
 
-            var sb = new StringBuilder();
+                var sb = new StringBuilder();
 
-            DataTable dt = oMain.GET_USER_MENU().Tables[0];
-            DataRow[] parentMenus = dt.Select("ParentId = 0 or ParentId is null");
+                DataTable dt = oMain.GET_USER_MENU().Tables[0];
+                DataRow[] parentMenus = dt.Select("ParentId = 0 or ParentId is null");
 
-            string unorderelist = generateMenus(parentMenus, dt, sb);
-            //Response.Write(unorderelist);
+                string unorderelist = generateMenus(parentMenus, dt, sb);
+                //Response.Write(unorderelist);
 
-            var sb2 = new StringBuilder();
-            sb2.Append("<ul  class=\"nav navbar-nav\">");
-            sb2.Append(unorderelist);
-            sb2.Append("</ul>");
-            myDiv.InnerHtml = sb2.ToString(); //sb2.ToString(); //unorderelist;
+                var sb2 = new StringBuilder();
+                sb2.Append("<ul  class=\"nav navbar-nav\">");
+                sb2.Append(unorderelist);
+                sb2.Append("</ul>");
+                myDiv.InnerHtml = sb2.ToString(); //sb2.ToString(); //unorderelist;
 
-            lblUser.Text = oGlobal.G_USERCODE;
+
+                lblUser.Text = oGlobal.G_USERCODE;
+
+            }
+
+            else
+            {
+                //Return to login
+                Response.Redirect("login.aspx");
+            }
         }
+
     }
 
     private string generateMenus(DataRow[] menu, DataTable dt, StringBuilder sb)

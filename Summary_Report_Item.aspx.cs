@@ -8,10 +8,10 @@ using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using SRPEDRO;
 
-public partial class Summary_Report_Branch : System.Web.UI.Page
+public partial class Summary_Report_Item : System.Web.UI.Page
 {
     ReportDocument oReportDocument = new ReportDocument();
-    Branch_C oBranch = new Branch_C();
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -19,7 +19,7 @@ public partial class Summary_Report_Branch : System.Web.UI.Page
         {
             txtStartDate.Text = DateTime.Now.ToShortDateString();
             txtEndDate.Text = DateTime.Now.ToShortDateString();
-            displayBranchList();
+          
 
         }
 
@@ -34,11 +34,7 @@ public partial class Summary_Report_Branch : System.Web.UI.Page
 
     }
 
-    private void displayBranchList()
-    {
-        oBranch.GET_BRANCH_LIST_DD(ddBranchList);
-        ddBranchList.Items.Insert(0, new ListItem("-- ALL --"));
-    }
+  
 
     protected void U_Print_Click(object sender, EventArgs e)
     {
@@ -60,41 +56,20 @@ public partial class Summary_Report_Branch : System.Web.UI.Page
 
 
 
-        if (ddBranchList.SelectedIndex == 0)
-        {
-            //This will display all transaction base on date range
-            oReportDocument.Load(Server.MapPath("~/Reports/Branch_All_Summary.rpt"));
+      
+            oReportDocument.Load(Server.MapPath("~/Reports/Items_All_Summary.rpt"));
 
             oReportDocument.SetParameterValue("DateRange", myRangeValue);
             oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); 
 
             CrystalReportViewer1.ReportSource = oReportDocument;
-        }
-        else
-        {
-            //This will display specific branch transaction only
-            oReportDocument.Load(Server.MapPath("~/Reports/Branch_Details_Summary.rpt"));
-            try
-            {
-                oReportDocument.SetParameterValue("BSNum", ddBranchList.SelectedValue.ToString());
-                oReportDocument.SetParameterValue("DateRange", myRangeValue);
-                oReportDocument.SetDatabaseLogon("sa", "p@ssw0rd"); // Supply user credentials
-
-                CrystalReportViewer1.ReportSource = oReportDocument;
-            }
-            catch
-            {
-
-            }
-
-        }
+      
 
     }
+
 
     protected void lnkHome_Click(object sender, EventArgs e)
     {
         Response.Redirect("home.aspx");
     }
-
-
 }

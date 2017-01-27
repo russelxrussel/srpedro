@@ -106,11 +106,13 @@
                     
                     <div class="col-md-3 col-md-offset-6">
                         <div class="input-group input-group-sm">
-                            <asp:TextBox runat="server" ID="txtPrintTransaction" CssClass="form-control" placeholder="Print Branch Transaction #"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtPrintTransaction" CssClass="form-control" placeholder="Branch Transaction #"></asp:TextBox>
                             <span class="input-group-btn">
                                 <asp:LinkButton runat="server" ID="lnkPrintTransaction" CssClass="btn btn-primary btn-sm"
                                     OnClick="lnkPrintTransaction_Click">Print</asp:LinkButton>
+                            
                             </span>
+                            
                         </div>
                     </div>
                 </div>
@@ -156,15 +158,7 @@
                                                     <asp:DropDownList ID="ddBranchList" runat="server" CssClass="dropdown form-control" OnSelectedIndexChanged="ddBranchList_SelectedIndexChanged"
                                                          AutoPostBack="True">
                                                     </asp:DropDownList>
-                                             <%--   </div>
-
-                                                 <!--Search Supplier -->
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
-                                            </span>
-                                            
-                                            <div id="divSearch">
-                                            </div>--%>
+                                         
                                             <strong>
                                             <asp:Label runat="server" ID="lblBranchManager" CssClass="form-control"></asp:Label></strong>
                                              <asp:Label runat="server" ID="lblBranchContact" CssClass="form-control"></asp:Label></strong>
@@ -223,15 +217,20 @@
                                             </li>
                                             <li class="list-group-item">
                                                 <div class="row">
+                                                    <div class="col-md-5">
+                                                    <div class="input-group input-group-sm">
+                                                            <span class="input-group-addon alert-info">STOCK AVL.</span><asp:Label runat="server" ID="lblInstock" CssClass="form-control text-danger"></asp:Label>
+                                                        </div>
+                                                    </div>
                                                     <!--Quantity Input -->
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-5">
                                                         <div class="input-group input-group-sm">
                                                             <span class="input-group-addon alert-danger">Quantity</span><asp:TextBox runat="server"
                                                                 CssClass="form-control" ID="txtQuantity" placeholder="Quantity"></asp:TextBox>
                                                         </div>
                                                     </div>
                                                     <!--Add Button -->
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-2">
                                                         <asp:LinkButton runat="server" ID="lnkAdd" CssClass="btn btn-warning btn-sm" OnClick="lnkAdd_Click"><span class="glyphicon glyphicon-plus-sign"></span> ADD</asp:LinkButton>
                                                     </div>
                                                 </div>

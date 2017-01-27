@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Summary_Report_Supplier.aspx.cs" Inherits="Summary_Report_Supplier" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Summary_Report_Item.aspx.cs" Inherits="Summary_Report_Item" %>
 
 <%@ Register assembly="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" namespace="CrystalDecisions.Web" tagprefix="CR" %>
 
@@ -24,7 +24,6 @@
            $('.calendarInput').datepicker();
        });
 
-
    
 
  
@@ -45,22 +44,15 @@ padding-top: 10px;
     
     <div class="row"><!--Main Row -->
         
-         <div class="col-md-1">
-                <asp:LinkButton runat="server" ID="lnkHome" CssClass="btn btn-primary btn-sm" 
-                    onclick="lnkHome_Click"><span class="glyphicon glyphicon-arrow-left"></span> HOME</asp:LinkButton>
-        </div>        
-                
-
-        <div class="col-md-3">
-         <div class="input-group input-group-sm">
-                    <span class="input-group-addon alert-danger">BRANCH</span>
-                    <asp:DropDownList runat="server" ID="ddSupplierList" CssClass="form-control"></asp:DropDownList>
-                </div>
+        <div class="col-md-1">
+         <asp:LinkButton runat="server" ID="lnkHome" CssClass="btn btn-primary btn-sm" 
+                onclick="lnkHome_Click"><span class="glyphicon glyphicon-arrow-left"></span>
+          HOME</asp:LinkButton>
         </div>
         <div class="col-md-3">
                 <!-- Start Date-->
                 <div class="input-group input-group-sm">
-                    <span class="input-group-addon alert-danger">FROM : <span class="glyphicon glyphicon-calendar">
+                    <span class="input-group-addon alert-danger">FROM <span class="glyphicon glyphicon-calendar">
                     </span></span>
                     <asp:TextBox runat="server" ID="txtStartDate" CssClass="calendarInput form-control"
                         placeholder="Start Date"></asp:TextBox>
@@ -69,7 +61,7 @@ padding-top: 10px;
         <div class="col-md-3">
                 <!-- End Date-->
                 <div class="input-group input-group-sm">
-                    <span class="input-group-addon alert-danger">TO :<span class="glyphicon glyphicon-calendar">
+                    <span class="input-group-addon alert-danger">TO <span class="glyphicon glyphicon-calendar">
                     </span></span>
                     <asp:TextBox runat="server" ID="txtEndDate" CssClass="calendarInput form-control"
                         placeholder="End Date"></asp:TextBox>
@@ -77,7 +69,7 @@ padding-top: 10px;
        </div>
         
                 
-        <div class="col-md-2">
+        <div class="col-md-3">
                 <asp:LinkButton runat="server" ID="U_Print" CssClass="btn btn-primary btn-sm" 
                         onclick="U_Print_Click"><span class="glyphicon glyphicon-print"></span> PREVIEW</asp:LinkButton>
         </div>        

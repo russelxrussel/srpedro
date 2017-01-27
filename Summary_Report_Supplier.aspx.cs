@@ -92,4 +92,8 @@ public partial class Summary_Report_Supplier : System.Web.UI.Page
     }
 
 
+    protected void lnkHome_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("home.aspx");
+    }
 }

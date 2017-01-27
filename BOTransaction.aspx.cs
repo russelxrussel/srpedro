@@ -49,6 +49,7 @@ public partial class BOTransaction : System.Web.UI.Page
             {
                 lblUOM.Text = row["UomCode"].ToString();
                 lblPrice.Text = row["ItemPrice"].ToString();
+                lblInstock.Text = row["Instock"].ToString();
             }
         }
     }
@@ -56,48 +57,59 @@ public partial class BOTransaction : System.Web.UI.Page
     protected void U_Save_S_Click(object sender, EventArgs e)
     {
 
-        //Saving Data on Supplier Transaction HDR
-
-        oBranch.INSERT_BRANCH_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateRelease.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT"), txtRemarks.Text, oGlobal.G_USERCODE);
-        
         if (gvBranchItems.Rows.Count > 0)
         {
-        
-            //Saving Rows Transaction of Supplier
-            foreach (GridViewRow row in gvBranchItems.Rows)
+            //Saving Data on Supplier Transaction HDR
+
+            oBranch.INSERT_BRANCH_TRANS_HDR(ddBranchList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDateRelease.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT"), txtRemarks.Text, oGlobal.G_USERCODE);
+
+            if (gvBranchItems.Rows.Count > 0)
             {
-                string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT");
-                oGlobal.G_BSNUM = SeriesNum;
 
-                string sItemCode = row.Cells[1].Text;
-                double dQty = double.Parse(row.Cells[3].Text);
-                string sUOM = row.Cells[4].Text;
-                double dPrice = double.Parse(row.Cells[5].Text);
+                //Saving Rows Transaction of Supplier
+                foreach (GridViewRow row in gvBranchItems.Rows)
+                {
+                    string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("BT");
+                    oGlobal.G_BSNUM = SeriesNum;
 
-                oBranch.INSERT_BRANCH_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, oGlobal.G_USERCODE);
-                
-              
+                    string sItemCode = row.Cells[1].Text;
+                    double dQty = double.Parse(row.Cells[3].Text);
+                    string sUOM = row.Cells[4].Text;
+                    double dPrice = double.Parse(row.Cells[5].Text);
+
+                    oBranch.INSERT_BRANCH_TRANS_ROWS(ddBranchList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, oGlobal.G_USERCODE);
+
+
+                }
+
+
+
+                //Update Series Number
+                oSeriesNumber.UPDATE_SERIES_NUMBER("BT");
+
+
+                //Direct to the print
+                PRINT_NOW("BOTransaction_Report.aspx");
+
+                //Prompt a message.
+                lblMessageSuccess.Text = "Transaction successfully recorded.";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgSuccessModal').modal('show');</script>", false);
+
+                //Clear Fields
+                resetFields();
+
+            }
+         
+        }
+            else
+            {
+                //Prompt a message.
+                lblErrorPrompt.Text = "No item to Save.";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgErrorModal').modal('show');</script>", false);
+
             }
 
-
-
-            //Update Series Number
-            oSeriesNumber.UPDATE_SERIES_NUMBER("BT");
-
-
-            //Direct to the print
-            PRINT_NOW("BOTransaction_Report.aspx");
-
-            //Prompt a message.
-            lblMessageSuccess.Text = "Transaction successfully recorded.";
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgSuccessModal').modal('show');</script>", false);
-   
-            //Clear Fields
-            resetFields();
-
-         
-       
-        }
+        
     }
 
      
@@ -116,51 +128,74 @@ public partial class BOTransaction : System.Web.UI.Page
 
           else
           {
-              //Check if item already on the list
-              if(ExistItem(ddItemList.SelectedValue.ToString()))
+              try
               {
+                  int iAvlQty = int.Parse(lblInstock.Text);
+                  int iQuantity = int.Parse(txtQuantity.Text);
 
-                  //Prompt a message.
-                  lblErrorPrompt.Text = "Item already exist on current request list.";
-                  ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgErrorModal').modal('show');</script>", false);
-     
+
+                  if (iQuantity > iAvlQty || iAvlQty <= 0)
+                  {
+                      lblErrorPrompt.Text = "Insufficient Stock.";
+                      ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgErrorModal').modal('show');</script>", false);
+                  }
+                  else
+                  {
+
+                      //Check if item already on the list
+                      if (ExistItem(ddItemList.SelectedValue.ToString()))
+                      {
+
+                          //Prompt a message.
+                          lblErrorPrompt.Text = "Item already exist on current request list.";
+                          ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgErrorModal').modal('show');</script>", false);
+
+                      }
+                      else
+                      {
+
+
+                          double itemPrice = Convert.ToDouble(lblPrice.Text);
+                          //Instantiate table 
+                          DataTable dt = (DataTable)Session["tempBranchOrder"];
+
+                          //Add New Row
+                          DataRow newRow = dt.NewRow();
+
+                          newRow["CODE"] = ddItemList.SelectedValue.ToString();
+                          newRow["DESC"] = ddItemList.SelectedItem.Text;
+                          newRow["QTY"] = double.Parse(txtQuantity.Text);
+                          newRow["UOM"] = lblUOM.Text;
+                          newRow["PRICE"] = itemPrice;
+                          double sSubTotal = double.Parse(txtQuantity.Text) * itemPrice;
+                          newRow["TOTAL"] = string.Format("{0:N}", sSubTotal);
+
+                          dt.Rows.Add(newRow);
+
+                          Session["tempBranchOrder"] = dt;
+
+                          gvBranchItems.DataSource = Session["tempBranchOrder"];
+                          gvBranchItems.DataBind();
+
+                          ddItemList.SelectedIndex = 0;
+
+
+                          lblRunningTotal.Text = string.Format("Total Cost: {0:N}", computeRunningTotal());
+
+                          //Clear Text
+                          lblUOM.Text = "";
+                          lblPrice.Text = "";
+                          txtQuantity.Text = "";
+
+                      }
+                  }
               }
-              else
+              catch
               {
-
-              double itemPrice = Convert.ToDouble(lblPrice.Text);
-              //Instantiate table 
-              DataTable dt = (DataTable)Session["tempBranchOrder"];
-
-              //Add New Row
-              DataRow newRow = dt.NewRow();
+                  lblErrorPrompt.Text = "Quantity allowed numbers only.";
+                  ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgErrorModal').modal('show');</script>", false);
               
-              newRow["CODE"] = ddItemList.SelectedValue.ToString();
-              newRow["DESC"] = ddItemList.SelectedItem.Text;
-              newRow["QTY"] = double.Parse(txtQuantity.Text);
-              newRow["UOM"] = lblUOM.Text;
-              newRow["PRICE"] = itemPrice;
-              double sSubTotal = double.Parse(txtQuantity.Text) * itemPrice;
-              newRow["TOTAL"] = string.Format("{0:N}", sSubTotal);
-             
-              dt.Rows.Add(newRow);
-
-              Session["tempBranchOrder"] = dt;
-
-              gvBranchItems.DataSource = Session["tempBranchOrder"];
-              gvBranchItems.DataBind();
-
-              ddItemList.SelectedIndex = 0;
-
-
-              lblRunningTotal.Text =  string.Format("Total Cost: {0:N}", computeRunningTotal());
-
-              //Clear Text
-              lblUOM.Text = "";
-              lblPrice.Text = "";
-              txtQuantity.Text = "";
-              
-            }
+              }
           }
       }
 
@@ -304,6 +339,7 @@ public partial class BOTransaction : System.Web.UI.Page
 
           lblPrice.Text = "";
           lblUOM.Text = "";
+          lblInstock.Text = "";
           lblRunningTotal.Text = "";
           lblBranchAddress.Text = "";
           lblBranchContact.Text = "";
