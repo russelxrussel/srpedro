@@ -107,6 +107,26 @@ namespace SRPEDRO
         }
 
 
+        public DataTable GET_USER_DATA()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("[xSys].[SP_GET_USER_LIST]", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = cmd;
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        
+        }
+
+
 
         //Getting Supplier List
         public DataTable GetSupplierList()
@@ -595,6 +615,63 @@ namespace SRPEDRO
         /* DATA MANIPULATION AREA 
          
          */
+
+        //Supplier Info Data Entry
+        public void INSERT_SUPPLIER_INFO(string _supplierCode, string _supplierName,
+                                    string _contactPerson, string _telephone, string _mobilephone,
+                                    string _address, string _userCode, string _prefixCode)
+        {
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("[Master].[SP_INSERT_SUPPLIER_INFO]", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@SUPPLIERCODE", _supplierCode);
+                    cmd.Parameters.AddWithValue("@SUPPLIERNAME", _supplierName);
+                    cmd.Parameters.AddWithValue("@CONTACTPERSON", _contactPerson);
+                    cmd.Parameters.AddWithValue("@TELEPHONE", _telephone);
+                    cmd.Parameters.AddWithValue("@MOBILEPHONE", _mobilephone);
+                    cmd.Parameters.AddWithValue("@ADDRESS", _address);
+                    cmd.Parameters.AddWithValue("@USERCODE", _userCode);
+                    cmd.Parameters.AddWithValue("@PREFIXCODE", _prefixCode);
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+
+        public void UPDATE_SUPPLIER_INFO(string _supplierCode, string _supplierName,
+                                    string _contactPerson, string _telephone, string _mobilephone,
+                                    string _address, string _userCode)
+        {
+            using (SqlConnection cn = new SqlConnection(CS))
+            {
+                using (SqlCommand cmd = new SqlCommand("[Master].[SP_UPDATE_SUPPLIER_INFO]", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@SUPPLIERCODE", _supplierCode);
+                    cmd.Parameters.AddWithValue("@SUPPLIERNAME", _supplierName);
+                    cmd.Parameters.AddWithValue("@CONTACTPERSON", _contactPerson);
+                    cmd.Parameters.AddWithValue("@TELEPHONE", _telephone);
+                    cmd.Parameters.AddWithValue("@MOBILEPHONE", _mobilephone);
+                    cmd.Parameters.AddWithValue("@ADDRESS", _address);
+                    cmd.Parameters.AddWithValue("@USERCODE", _userCode);
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+
+
+
         public void INSERT_SUPPLIER_ORDER_TRANS_HDR(string _supplierCode, DateTime _documentDate, DateTime _receiveDate, string _ssnum, string _remarks, string _userCode)
         {
             using (SqlConnection cn = new SqlConnection(CS))
@@ -670,7 +747,7 @@ namespace SRPEDRO
         }
 
 
-        public void INSERT_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, string _uomCode, double _itemPrice, bool _itemStatus, string _remarks, string _locationCode, double _minimumStock, string _userCode, string _prefixCode)
+        public void INSERT_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, string _uomCode, double _itemPrice, bool _itemStatus, string _remarks, double _minimumStock, string _userCode, string _prefixCode)
         {
             using (SqlConnection cn = new SqlConnection(CS))
             {
@@ -684,7 +761,6 @@ namespace SRPEDRO
                     cmd.Parameters.AddWithValue("@ITEMPRICE", _itemPrice);
                     cmd.Parameters.AddWithValue("@ITEMSTATUS", _itemStatus);
                     cmd.Parameters.AddWithValue("@REMARKS", _remarks);
-                    cmd.Parameters.AddWithValue("@LOCATIONCODE", _locationCode);
                     cmd.Parameters.AddWithValue("@MINIMUMSTOCKLEVEL", _minimumStock);
                     cmd.Parameters.AddWithValue("@USERCODE", _userCode);
                     cmd.Parameters.AddWithValue("@PREFIXCODE", _prefixCode);
@@ -697,7 +773,7 @@ namespace SRPEDRO
             }
         }
 
-        public void UPDATE_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, double _itemPrice, bool _itemStatus, string _remarks, string _locationCode, double _minimumStock, string _userCode)
+        public void UPDATE_ITEM_INVENTORY_DATA(string _itemCode, string _itemName, double _itemPrice, bool _itemStatus, string _remarks, double _minimumStock, string _userCode)
         {
             using (SqlConnection cn = new SqlConnection(CS))
             {
@@ -710,7 +786,6 @@ namespace SRPEDRO
                     cmd.Parameters.AddWithValue("@ITEMPRICE", _itemPrice);
                     cmd.Parameters.AddWithValue("@ITEMSTATUS", _itemStatus);
                     cmd.Parameters.AddWithValue("@REMARKS", _remarks);
-                    cmd.Parameters.AddWithValue("@LOCATIONCODE", _locationCode);
                     cmd.Parameters.AddWithValue("@MINIMUMSTOCKLEVEL", _minimumStock);
                     cmd.Parameters.AddWithValue("@USERCODE", _userCode);
 

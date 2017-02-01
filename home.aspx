@@ -6,12 +6,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div class="container container_content">
 
+<div class="row">
 
-<div class="well well-lg">
-
-<p>Sr Pedro Inventory Management System ver. 1.0</p>
-
-<strong>Under Testing procedure.</strong>    
 </div>
 
 </div>

@@ -11,13 +11,15 @@
 <body>
     <form id="form1" runat="server">
     <div>
-     <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" 
-            AutoDataBind="true" 
-            HasCrystalLogo="False" ToolPanelView="None" 
-            ToolPanelWidth="200px" Width="1024px" EnableDatabaseLogonPrompt="False" 
-            EnableParameterPrompt="False" HasToggleGroupTreeButton="False" 
-            HasToggleParameterPanelButton="False" ReuseParameterValuesOnRefresh="True" GroupTreeStyle-ShowLines="False" />
-     
+      <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" 
+            AutoDataBind="true" ReportSourceID="CrystalReportSource1" 
+            EnableParameterPrompt="False" 
+            ToolPanelView="None" />
+        <br />
+      <%--  <CR:CrystalReportSource ID="CrystalReportSource1" runat="server">
+            <Report FileName="Reports/Supplier_Stock_Trans.rpt">
+            </Report>
+        </CR:CrystalReportSource>--%>
     </div>
     </form>
 </body>

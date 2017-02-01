@@ -140,11 +140,4 @@ public partial class mstrPage : System.Web.UI.MasterPage
         return sb.ToString();
 
     }
-
-    protected void Page_UnLoad(object sender, EventArgs e)
-    {
-
-      //  oGlobal.G_USERCODE = "";
-
-    }
 }

@@ -56,50 +56,60 @@ public partial class Transaction : System.Web.UI.Page
 
     protected void U_Save_S_Click(object sender, EventArgs e)
     {
-
-        //Saving Data on Supplier Transaction HDR
-
-        oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDeliveryDate.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, oGlobal.G_USERCODE);
-
-
         if (gvSupplierItems.Rows.Count > 0)
         {
-        
-            //Saving Rows Transaction of Supplier
-            foreach (GridViewRow row in gvSupplierItems.Rows)
+
+            //Saving Data on Supplier Transaction HDR
+
+            oSupplier.INSERT_SUPPLIER_ORDER_TRANS_HDR(ddSupplierList.SelectedValue.ToString(), Convert.ToDateTime(txtDateTrans.Text), Convert.ToDateTime(txtDeliveryDate.Text), oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST"), txtRemarks.Text, "RUssel");
+
+
+            if (gvSupplierItems.Rows.Count > 0)
             {
-                string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST");
-                oGlobal.G_SSNUM = SeriesNum;
 
-                string sItemCode = row.Cells[1].Text;
-                double dQty = double.Parse(row.Cells[3].Text);
-                string sUOM = row.Cells[4].Text;
-                double dPrice = double.Parse(row.Cells[5].Text);
+                //Saving Rows Transaction of Supplier
+                foreach (GridViewRow row in gvSupplierItems.Rows)
+                {
+                    string SeriesNum = oSeriesNumber.GENERATE_SERIES_NUMBER_TRANS("ST");
+                    oGlobal.G_SSNUM = SeriesNum;
 
-                oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), SeriesNum , sItemCode, dQty, dPrice, sUOM, oGlobal.G_USERCODE);
-                
-                //Update Stock Inventory
-                //oSupplier.UPDATE_STOCK_INVENTORY(sItemCode, dQty);
+                    string sItemCode = row.Cells[1].Text;
+                    double dQty = double.Parse(row.Cells[3].Text);
+                    string sUOM = row.Cells[4].Text;
+                    double dPrice = double.Parse(row.Cells[5].Text);
+
+                    oSupplier.INSERT_SUPPLIER_ORDER_TRANS_ROWS(ddSupplierList.SelectedValue.ToString(), SeriesNum, sItemCode, dQty, dPrice, sUOM, "ADMIN USER");
+
+                    //Update Stock Inventory
+                    //oSupplier.UPDATE_STOCK_INVENTORY(sItemCode, dQty);
+                }
+
+
+
+                //Update Series Number
+                oSeriesNumber.UPDATE_SERIES_NUMBER("ST");
+
+
+                //Direct to the print
+                PRINT_NOW("SITransaction_Report.aspx");
+
+                //Prompt a message.
+                lblMessageSuccess.Text = "Transaction successfully recorded.";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgSuccessModal').modal('show');</script>", false);
+
+                //Clear Fields
+                resetFields();
+
+
+
             }
-
-
-
-            //Update Series Number
-            oSeriesNumber.UPDATE_SERIES_NUMBER("ST");
-
-
-            //Direct to the print
-            PRINT_NOW("SITransaction_Report.aspx");
-
+        }
+        else
+        {
             //Prompt a message.
-            lblMessageSuccess.Text = "Transaction successfully recorded.";
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgSuccessModal').modal('show');</script>", false);
-   
-            //Clear Fields
-            resetFields();
-
-         
-       
+            lblErrorPrompt.Text = "No item was added.";
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgErrorModal').modal('show');</script>", false);
+     
         }
     }
 

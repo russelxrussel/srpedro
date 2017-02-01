@@ -9,6 +9,7 @@ using System.Web;
 public static class oGlobal
 {
     static string _gusercode;
+    static string _gusername;
 
     static string _gBsNum;
     static string _gSsNum;
@@ -24,6 +25,20 @@ public static class oGlobal
         }
     
     }
+   
+    public static string G_USERNAME
+    {
+        get
+        {
+            return _gusername;
+        }
+        set
+        {
+            _gusername = value;
+        }
+
+    }
+
 
     public static string G_BSNUM
     {

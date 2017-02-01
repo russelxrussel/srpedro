@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 using SRPEDRO;
 
 
@@ -33,19 +34,41 @@ public partial class login : System.Web.UI.Page
 
     protected void btnLogin_Click(object sender, EventArgs e)
     {
-  
-        if(oXtra.checkUser(txtUserId.Text, txtPassword.Text))
-        {
-           oGlobal.G_USERCODE = txtUserId.Text;
+        DataTable dt = oXtra.GET_USER_DATA();
+        DataRow[] dr;
+        dr = dt.Select("UserCode = '" + txtUserId.Text + "' and Password = '" + txtPassword.Text + "'");
 
-            Response.Redirect("home.aspx");
+        if (dr.Length > 0)
+        {
+            //Will display the selected item info
+            foreach (DataRow row in dr)
+            {
+                oGlobal.G_USERCODE = row["usercode"].ToString();
+                oGlobal.G_USERNAME = row["name"].ToString();
+               
+                Response.Redirect("home.aspx");
+            }
         }
+
         else
         {
-      
-                lblErrorMessage.Text = "User is not valid.";
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgModal').modal('show');</script>", false);
+            lblErrorMessage.Text = "User is not valid.";
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgModal').modal('show');</script>", false);
         }
+
+  
+        //if(oXtra.checkUser(txtUserId.Text, txtPassword.Text))
+        //{
+        //   oGlobal.G_USERCODE = txtUserId.Text;
+
+        //    Response.Redirect("home.aspx");
+        //}
+        //else
+        //{
+      
+        //        lblErrorMessage.Text = "User is not valid.";
+        //        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "msg", "<script>$('#msgModal').modal('show');</script>", false);
+        //}
         
     }
 
@@ -54,4 +77,6 @@ public partial class login : System.Web.UI.Page
     {
         lblDT.Text = oXtra.GetServerDate().ToLongDateString() + " " + oXtra.GetServerDate().ToLongTimeString();
     }
+
+  
 }
